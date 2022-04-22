@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App.Starting">
         <activity
-            android:name=".RootActivity"
+            android:name=".presentation.RootActivity"
             android:theme="@style/Theme.App.Starting"
             android:exported="true">
             <intent-filter>

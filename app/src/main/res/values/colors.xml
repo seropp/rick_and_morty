@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="splash_screen">#1B0016</color>
+    <color name="light_pink">#FF74E5</color>
+    <color name="light_beige">#FFEF7C</color>
 </resources>
