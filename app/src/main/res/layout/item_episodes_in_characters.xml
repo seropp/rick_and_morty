@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/distance_horizontal"
+    android:layout_marginTop="@dimen/distance_vertical"
+    android:layout_marginEnd="@dimen/distance_horizontal"
+    android:backgroundTint="@color/splash_screen"
+    app:cardCornerRadius="@dimen/radius_shape">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:alpha="0.25"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bg_for_toolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/episode_name_in_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/item_horizontal_distance"
+                android:layout_marginTop="@dimen/item_horizontal_distance"
+                android:layout_marginEnd="@dimen/item_horizontal_distance"
+                android:layout_marginBottom="@dimen/item_vertical_distance"
+                android:text="@string/episodes_item"
+                android:textColor="@color/white"
+                android:textSize="@dimen/item_name"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/data_sapience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/item_horizontal_distance"
+                android:layout_marginTop="@dimen/item_vertical_distance"
+                android:layout_marginEnd="@dimen/item_horizontal_distance"
+                android:layout_marginBottom="@dimen/item_vertical_distance"
+                android:text="@string/date"
+                android:textColor="@color/white"
+                android:textSize="@dimen/add_info_item" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="@dimen/item_vertical_distance"
+            android:src="@drawable/item_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
