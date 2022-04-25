@@ -4,19 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_500"
+    android:background="@color/splash_screen"
     tools:context=".presentation.locations.LocationsFragment">
 
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_locations"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/filter_btn_size"
+        android:layout_marginStart="@dimen/distance_vertical"
+        android:layout_marginTop="@dimen/distance_vertical"
+        android:layout_marginEnd="@dimen/distance_vertical"
+        android:background="@drawable/background_search"
+        app:iconifiedByDefault="false"
+        app:layout_constraintEnd_toStartOf="@+id/btn_filter_locations"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="@string/search_character" />
+
+    <ImageView
+        android:id="@+id/btn_filter_locations"
+        android:layout_width="@dimen/filter_btn_size"
+        android:layout_height="@dimen/filter_btn_size"
+        android:layout_marginTop="@dimen/distance_vertical"
+        android:layout_marginEnd="@dimen/distance_vertical"
+        android:background="@drawable/filter_btn_background"
+        android:src="@drawable/ic_filter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/locations_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/distance_vertical"
+        android:layout_marginTop="@dimen/distance_vertical"
+        android:text="@string/locations"
+        android:textColor="@color/white_yellow"
+        android:textSize="@dimen/label_size"
         android:textStyle="bold"
-        android:textSize="50sp"
-        android:text="LOCATION"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_locations" />
+
+    <TextView
+        android:id="@+id/reset_locations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/distance_vertical"
+        android:layout_marginEnd="@dimen/distance_vertical"
+        android:text="@string/reset"
+        android:textColor="@color/white_blue"
+        android:textSize="@dimen/label_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_filter_locations" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_locations"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/zero"
+        android:layout_marginStart="@dimen/distance_horizontal"
+        android:layout_marginTop="@dimen/distance_vertical"
+        android:layout_marginEnd="@dimen/distance_horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/locations_label"
+        app:layout_constraintVertical_bias="0.0"
+        app:spanCount="2"
+        tools:listitem="@layout/item_locations"
+        tools:orientation="vertical" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

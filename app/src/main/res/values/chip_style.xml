@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@drawable/chip_selector_color</item>
+        <item name="chipStrokeColor">@drawable/chip_selector_color</item>
+        <item name="chipStrokeWidth">@dimen/item_vertical_distance</item>
+        <item name="chipCornerRadius">@dimen/radius_shape</item>
+        <item name="chipBackgroundColor">@color/splash_screen</item>
+
+    </style>
+
+</resources>

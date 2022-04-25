@@ -1,14 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/splash_screen"
+    android:orientation="vertical"
     tools:context=".presentation.characters.CharactersFilterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/title_filter"
+        android:textAlignment="center"
+        android:textColor="@color/white_blue"
+        android:textSize="@dimen/label_size" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_status"
+            android:textColor="@color/white_blue"
+            android:textSize="@dimen/label_size"
+            android:textStyle="bold" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/status_filter_characters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/filter_vertical"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_alive"
+                style="@style/ChipStyle"
+                android:text="@string/alive" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_dead"
+                style="@style/ChipStyle"
+                android:text="@string/dead" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_unknown"
+                style="@style/ChipStyle"
+                android:text="@string/unknown" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/distance_vertical"
+            android:text="@string/gender"
+            android:textColor="@color/white_blue"
+            android:textSize="@dimen/label_size"
+            android:textStyle="bold" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/gender_filter_characters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/distance_vertical"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/filter_gender_female"
+                style="@style/ChipStyle"
+                android:text="@string/female" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/filter_gender_male"
+                style="@style/ChipStyle"
+                android:text="@string/male" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/filter_gender_genderless"
+                style="@style/ChipStyle"
+                android:text="@string/genderless" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/filter_gender_unknown"
+                style="@style/ChipStyle"
+                android:text="@string/unknown" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_apply_filter_characters"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/filter_top_distance"
+        android:layout_marginBottom="@dimen/distance_vertical"
+        android:background="@drawable/filter_btn_background"
+        android:text="@string/apply"
+        android:textColor="@color/black"
+        app:backgroundTint="@null" />
+
+</LinearLayout>

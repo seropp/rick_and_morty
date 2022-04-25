@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -10,4 +11,15 @@
     <color name="splash_screen">#1B0016</color>
     <color name="light_pink">#FF74E5</color>
     <color name="light_beige">#FFEF7C</color>
+    <color name="blue">#1100FF</color>
+    <color name="orange">#FF5900</color>
+    <color name="yellow">#E6D0FF00</color>
+    <color name="pink">#E6C800FF</color>
+    <color name="white_yellow">#F4F3D7</color>
+    <color name="white_blue">#A3B2FB</color>
+    <color name="card_color">#C17D0291</color>
+    <color name="gray_pink">#9C8F759E</color>
+    <color name="green">#9C2EFF00</color>
+    <color name="light_green">#9C8CDF7A</color>
+
 </resources>

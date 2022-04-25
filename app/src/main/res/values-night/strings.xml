@@ -1,6 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="characters">Characters</string>
+
+    <string name="app_name">Rick and Morty</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="locations">Locations</string>
+    <string name="episodes_item">ep.1:</string>
+    <string name="search_character">Search Character</string>
+    <string name="reset">reset</string>
+    <string name="human">Human</string>
+    <string name="rick_sanchez">Rick Sanchez</string>
+    <string name="title_filter">Filter</string>
+    <string name="characters">Characters</string>
+    <string name="filter_status">Status</string>
+    <string name="alive">Alive</string>
+    <string name="dead">Dead</string>
+    <string name="gender">Gender</string>
+    <string name="apply">apply</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="unknown">Unknown</string>
+    <string name="genderless">Genderless</string>
+    <string name="status">Status:</string>
+    <string name="specie">Specie:</string>
+    <string name="gender_c">Gender:</string>
+    <string name="origin">Origin:</string>
     <string name="episodes">Episodes</string>
+    <string name="date">Date:</string>
+    <string name="earth">Earth</string>
+    <string name="planet">Planet</string>
+    <string name="dimension_c_137">Dimension C-137</string>
+    <string name="purge_planet">Purge Planet</string>
+    <string name="type">Type:</string>
+    <string name="dimensions">Dimensions:</string>
+    <string name="residents">Residents</string>
+    <string name="the_ricklantis_mixup">The Ricklantis Mixup</string>
+    <string name="air_date_september_10_2017">Air date: September 10, 2017</string>
+    <string name="episode_s03e07">Episode: S03E07</string>
+    <string name="episode_name">Episode name</string>
+
 </resources>
