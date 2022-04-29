@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,6 +8,39 @@
     android:orientation="vertical"
     tools:context=".presentation.locations.LocationFilterFragment">
 
+    <Button
+        android:id="@+id/btn_filter_locations_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/distance_vertical"
+        android:background="@drawable/params_btn_background"
+        android:text="@string/select_type"
+        android:textAllCaps="false"
+        app:backgroundTint="@null" />
+
+    <Button
+        android:id="@+id/btn_filter_locations_dimension"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/distance_vertical"
+        android:background="@drawable/params_btn_background"
+        android:text="@string/select_dimension"
+        android:textAllCaps="false"
+        app:backgroundTint="@null" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_apply_filter_locations"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/filter_top_distance"
+        android:layout_marginBottom="@dimen/distance_vertical"
+        android:background="@drawable/filter_btn_background"
+        android:text="@string/apply"
+        android:textColor="@color/black"
+        app:backgroundTint="@null" />
 
 
 </LinearLayout>

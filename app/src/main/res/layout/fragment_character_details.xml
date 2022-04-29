@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/splash_screen"
-    tools:context=".presentation.characters.CharactersDetailFragment">
+    tools:context=".presentation.characters.CharacterDetailsFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
@@ -24,11 +24,11 @@
         app:layout_constraintTop_toTopOf="@+id/guideline1" />
 
     <TextView
+        android:layout_marginTop="@dimen/chain_vertical"
         android:id="@+id/character_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/distance_horizontal"
-        android:layout_marginTop="@dimen/chain_vertical"
         android:text="@string/status"
         android:textSize="@dimen/item_name"
         app:layout_constraintBottom_toTopOf="@+id/character_specie"
@@ -60,17 +60,33 @@
         app:layout_constraintTop_toBottomOf="@+id/character_specie" />
 
     <TextView
+        android:clickable="true"
         android:id="@+id/character_origin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/distance_horizontal"
         android:layout_marginTop="@dimen/distance_between_text"
-        android:layout_marginBottom="@dimen/chain_vertical"
         android:text="@string/origin"
+        android:textSize="@dimen/item_name"
+        app:layout_constraintBottom_toTopOf="@+id/character_location"
+        app:layout_constraintStart_toEndOf="@+id/character_image"
+        app:layout_constraintTop_toBottomOf="@+id/character_gender"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/character_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/distance_horizontal"
+        android:layout_marginTop="@dimen/distance_between_text"
+        android:layout_marginBottom="@dimen/chain_vertical"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/last_location"
         android:textSize="@dimen/item_name"
         app:layout_constraintBottom_toBottomOf="@+id/character_image"
         app:layout_constraintStart_toEndOf="@+id/character_image"
-        app:layout_constraintTop_toBottomOf="@+id/character_gender" />
+        app:layout_constraintTop_toBottomOf="@+id/character_origin" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -3,10 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/splash_screen"
     android:orientation="vertical"
     tools:context=".presentation.episodes.EpisodesFilterFragment">
 
+    <Button
+        android:id="@+id/btn_filter_episodes_episodes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/distance_vertical"
+        android:background="@drawable/params_btn_background"
+        android:text="@string/select_series"
+        android:textAllCaps="false"
+        app:backgroundTint="@null" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_apply_filter_episodes"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/filter_top_distance"
+        android:layout_marginBottom="@dimen/distance_vertical"
+        android:background="@drawable/filter_btn_background"
+        android:text="@string/apply"
+        android:textColor="@color/black"
+        app:backgroundTint="@null" />
 
 
 </LinearLayout>
