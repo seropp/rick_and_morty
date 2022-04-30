@@ -54,7 +54,6 @@ class EpisodesFragment : Fragment() {
 
         binding.episodesLabel.setOnClickListener {
             Toast.makeText(requireContext(), "$episode", Toast.LENGTH_SHORT).show()
-
         }
 
     }

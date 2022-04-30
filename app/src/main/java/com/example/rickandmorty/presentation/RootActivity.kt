@@ -30,14 +30,20 @@ class RootActivity : AppCompatActivity(), Navigator {
         }
         setContentView(R.layout.activity_root)
 
-        val manager = supportFragmentManager
-        if (manager.backStackEntryCount == 0) {
-            openCharactersFragment()
+//        val manager = supportFragmentManager
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .add(
+                    R.id.container_navigator,
+                    CharactersFragment(),
+                    "ADD FIRST FRAGMENT"
+                ).commit()
         } else {
-            val backEntry = manager.getBackStackEntryAt(manager.backStackEntryCount - 1)
+            val backEntry =
+                supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
 
             val tag = backEntry.name
-            manager.popBackStack(tag, 0)
+            supportFragmentManager.popBackStack(tag, 0)
         }
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)

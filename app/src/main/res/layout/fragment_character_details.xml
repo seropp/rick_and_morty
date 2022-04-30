@@ -24,11 +24,11 @@
         app:layout_constraintTop_toTopOf="@+id/guideline1" />
 
     <TextView
-        android:layout_marginTop="@dimen/chain_vertical"
         android:id="@+id/character_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/distance_horizontal"
+        android:layout_marginTop="@dimen/chain_vertical"
         android:text="@string/status"
         android:textSize="@dimen/item_name"
         app:layout_constraintBottom_toTopOf="@+id/character_specie"
@@ -60,18 +60,18 @@
         app:layout_constraintTop_toBottomOf="@+id/character_specie" />
 
     <TextView
-        android:clickable="true"
         android:id="@+id/character_origin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/distance_horizontal"
         android:layout_marginTop="@dimen/distance_between_text"
+        android:clickable="true"
+        android:focusable="true"
         android:text="@string/origin"
         android:textSize="@dimen/item_name"
         app:layout_constraintBottom_toTopOf="@+id/character_location"
         app:layout_constraintStart_toEndOf="@+id/character_image"
-        app:layout_constraintTop_toBottomOf="@+id/character_gender"
-        android:focusable="true" />
+        app:layout_constraintTop_toBottomOf="@+id/character_gender" />
 
     <TextView
         android:id="@+id/character_location"
@@ -120,5 +120,18 @@
         app:spanCount="1"
         tools:listitem="@layout/item_episodes_in_characters"
         tools:orientation="vertical" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_character_details"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:indeterminateTint="@color/yellow"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rv_character_detail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -78,4 +78,17 @@
         tools:listitem="@layout/item_characters"
         tools:orientation="vertical" />
 
+    <ProgressBar
+        android:id="@+id/progressBar_episode_details"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:indeterminateTint="@color/yellow"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/rv_episode_detail"
+        app:layout_constraintEnd_toEndOf="@+id/rv_episode_detail"
+        app:layout_constraintStart_toStartOf="@+id/rv_episode_detail"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

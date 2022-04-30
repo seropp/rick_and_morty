@@ -36,6 +36,11 @@ class EpisodeDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentEpisodeDetailsBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        init()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,7 +51,7 @@ class EpisodeDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        episodeId = requireArguments().getInt(KEY_EPISODE_ID)
+
     }
 
     private fun openCharacterDetails(characterId: Int) {

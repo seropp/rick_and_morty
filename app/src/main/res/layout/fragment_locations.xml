@@ -76,4 +76,17 @@
         tools:listitem="@layout/item_locations"
         tools:orientation="vertical" />
 
+    <ProgressBar
+        android:id="@+id/progressBar_locations"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:indeterminateTint="@color/yellow"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rv_locations" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
