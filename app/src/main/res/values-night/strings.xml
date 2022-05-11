@@ -44,5 +44,6 @@
     <string name="select_series">Select series</string>
     <string name="select_type">Select type</string>
     <string name="select_dimension">Select dimension</string>
+    <string name="search_episode">Search Episode</string>
 
 </resources>

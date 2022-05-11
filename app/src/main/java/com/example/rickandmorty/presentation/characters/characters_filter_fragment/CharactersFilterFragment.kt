@@ -1,7 +1,6 @@
-package com.example.rickandmorty.presentation.characters
+package com.example.rickandmorty.presentation.characters.characters_filter_fragment
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +16,8 @@ import com.google.android.material.chip.Chip
 class CharactersFilterFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentCharactersFilterBinding
-    private var species: List<String>? = null
-    private var type: List<String>? = null
+    private var species: String? = null
+    private var type: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,18 +37,20 @@ class CharactersFilterFragment : BottomSheetDialogFragment() {
             navigator().openCharactersFragmentWithArg(
                 gender = gender,
                 status = status,
-                type = null,
-                species = null
+                type = type,
+                species = species
             )
             dismiss()
         }
 
         binding.btnFilterCharactersType.setOnClickListener {
-            type = getOtherParams(listOf<String>("type", "2", "3", "4"), "Characters types")
+            type = getFilter(listOf<String>("type", "2", "3", "4"), "Characters types")
+            Toast.makeText(requireContext(), "$type", Toast.LENGTH_LONG).show()
         }
 
         binding.btnFilterCharactersSpecies.setOnClickListener {
-            species = getOtherParams(listOf<String>("species", "2", "3", "4"), "Characters species")
+            species = getFilter(listOf<String>("species", "2", "3", "4"), "Characters species")
+            Toast.makeText(requireContext(), "$species", Toast.LENGTH_LONG).show()
         }
 
     }
@@ -70,27 +71,23 @@ class CharactersFilterFragment : BottomSheetDialogFragment() {
         return null
     }
 
-    private fun getOtherParams(params: List<String>, paramsType: String): List<String>? {
+    private fun getFilter(params: List<String>, paramsType: String): String? {
 
         val typesArr = params.toTypedArray()
-        val checkedItems: BooleanArray = typesArr.map { false }.toBooleanArray()
-
-        val result = ArrayList<String>()
+        var result: String? = null
 
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle(paramsType)
-            .setMultiChoiceItems(
+            .setSingleChoiceItems(
                 typesArr,
-                checkedItems
-            ) { _, which, isChecked ->
-                if (isChecked) {
-                    result.add(typesArr[which])
-                }
+                -1,
+            ) { _, which ->
+                result = typesArr[which]
             }
             .setPositiveButton(
                 "Confirm"
             ) { _, _ ->
-                Toast.makeText(requireContext(), "$result", Toast.LENGTH_LONG).show()
+
             }
             .setNegativeButton("Cancel", null)
             .create()

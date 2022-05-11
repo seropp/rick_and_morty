@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/splash_screen"
     android:orientation="vertical"
-    tools:context=".presentation.characters.CharactersFilterFragment">
+    tools:context=".presentation.characters.characters_filter_fragment.CharactersFilterFragment">
 
     <TextView
         android:layout_width="match_parent"

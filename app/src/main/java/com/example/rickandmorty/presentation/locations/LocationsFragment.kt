@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.rickandmorty.databinding.FragmentLocationsBinding
-import com.example.rickandmorty.presentation.episodes.EpisodesFragment
 import com.example.rickandmorty.presentation.navigator
 
 class LocationsFragment : Fragment() {

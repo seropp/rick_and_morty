@@ -14,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class EpisodesFilterFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentEpisodesFilterBinding
-    private var episode: List<String>? = null
+    private var episode: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,30 +28,26 @@ class EpisodesFilterFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnApplyFilterEpisodes.setOnClickListener {
-            navigator().openEpisodesFragmentWithArg(episode = null)
+            navigator().openEpisodesFragmentWithArg(episode = episode)
             dismiss()
         }
         binding.btnFilterEpisodesEpisodes.setOnClickListener {
-            episode = getOtherParams(listOf<String>("type", "2", "3", "4"), "Episodes")
+            episode = getFilter(listOf<String>("type", "2", "3", "4"), "Episodes")
         }
     }
 
-    private fun getOtherParams(params: List<String>, paramsType: String): List<String>? {
+    private fun getFilter(params: List<String>, paramsType: String): String? {
 
         val typesArr = params.toTypedArray()
-        val checkedItems: BooleanArray = typesArr.map { false }.toBooleanArray()
-
-        val result = ArrayList<String>()
+        var result: String? = null
 
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle(paramsType)
-            .setMultiChoiceItems(
+            .setSingleChoiceItems(
                 typesArr,
-                checkedItems
-            ) { _, which, isChecked ->
-                if (isChecked) {
-                    result.add(typesArr[which])
-                }
+                -1,
+            ) { _, which ->
+                result = typesArr[which]
             }
             .setPositiveButton(
                 "Confirm"

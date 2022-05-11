@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_filter_locations"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:queryHint="@string/search_character" />
+        app:queryHint="@string/search_location" />
 
     <ImageView
         android:id="@+id/btn_filter_locations"

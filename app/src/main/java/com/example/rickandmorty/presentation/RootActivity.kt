@@ -4,10 +4,11 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.paging.ExperimentalPagingApi
 import com.example.rickandmorty.R
-import com.example.rickandmorty.presentation.characters.CharacterDetailsFragment
-import com.example.rickandmorty.presentation.characters.CharactersFilterFragment
-import com.example.rickandmorty.presentation.characters.CharactersFragment
+import com.example.rickandmorty.presentation.characters.character_details_fragment.CharacterDetailsFragment
+import com.example.rickandmorty.presentation.characters.characters_filter_fragment.CharactersFilterFragment
+import com.example.rickandmorty.presentation.characters.characters_fragment.CharactersFragment
 import com.example.rickandmorty.presentation.episodes.EpisodeDetailsFragment
 import com.example.rickandmorty.presentation.episodes.EpisodesFilterFragment
 import com.example.rickandmorty.presentation.episodes.EpisodesFragment
@@ -15,10 +16,11 @@ import com.example.rickandmorty.presentation.locations.LocationDetailsFragment
 import com.example.rickandmorty.presentation.locations.LocationFilterFragment
 import com.example.rickandmorty.presentation.locations.LocationsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
+@ExperimentalPagingApi
 class RootActivity : AppCompatActivity(), Navigator {
 
     private val vm: SplashScreenViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -5,14 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
-import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentEpisodeDetailsBinding
-import com.example.rickandmorty.presentation.characters.CharacterDetailsFragment
-import com.example.rickandmorty.presentation.locations.LocationDetailsFragment
 import com.example.rickandmorty.presentation.navigator
-import kotlin.math.E
 import kotlin.properties.Delegates
 
 

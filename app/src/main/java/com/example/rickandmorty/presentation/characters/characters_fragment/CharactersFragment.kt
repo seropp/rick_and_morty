@@ -1,19 +1,28 @@
-package com.example.rickandmorty.presentation.characters
+package com.example.rickandmorty.presentation.characters.characters_fragment
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
-import com.example.rickandmorty.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.ExperimentalPagingApi
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentCharactersBinding
+import com.example.rickandmorty.presentation.adapters.characters_adapter.CharactersAdapter
 import com.example.rickandmorty.presentation.navigator
+import kotlinx.android.synthetic.main.fragment_characters.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@ExperimentalPagingApi
+@ExperimentalCoroutinesApi
+@FlowPreview
 class CharactersFragment : Fragment() {
 
     private lateinit var binding: FragmentCharactersBinding
@@ -21,6 +30,9 @@ class CharactersFragment : Fragment() {
     private var status: String? = null
     private var species: String? = null
     private var type: String? = null
+
+    @ExperimentalPagingApi
+    private lateinit var vm: CharactersViewModel
 
     companion object {
         private const val KEY_GENDER: String = "KEY_GENDER"
@@ -50,11 +62,15 @@ class CharactersFragment : Fragment() {
         init()
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCharactersBinding.inflate(inflater, container, false)
+
+        vm = ViewModelProvider(this, CharactersViewModelProvider(requireContext()))[CharactersViewModel::class.java]
+        setupCharactersList()
         return binding.root
     }
 
@@ -67,9 +83,33 @@ class CharactersFragment : Fragment() {
 
         binding.charactersLabel.setOnClickListener {
             Toast.makeText(requireContext(), "$gender, $status, $species, $type", Toast.LENGTH_SHORT).show()
+            vm.getCharacters()
+        }
 
+    }
+
+    private fun setupCharactersList() {
+        val charactersAdapter = CharactersAdapter(listener = vm)
+        binding.rvCharacters.apply {
+            val linearLayoutManager = LinearLayoutManager(requireContext())
+            layoutManager = linearLayoutManager
+            setHasFixedSize(true)
+            adapter = charactersAdapter
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            vm.charactersFlow.collectLatest {
+                Log.e("TAGGGGGGGGGGGGGGGGGG", "1")
+                charactersAdapter.submitData(it)
+            }
         }
     }
+
+//    private fun setupSwipeToRefresh() {
+//        binding.swipeRefreshLayout.setOnRefreshListener {
+//            viewModel.refresh()
+//        }
+//    }
 
     private fun init() {
         arguments?.let {

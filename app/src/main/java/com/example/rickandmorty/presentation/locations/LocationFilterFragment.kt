@@ -1,7 +1,6 @@
 package com.example.rickandmorty.presentation.locations
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +16,8 @@ class LocationFilterFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentLocationsFilterBinding
 
-    private var types: List<String>? = null
-    private var dimensions: List<String>? = null
+    private var type: String? = null
+    private var dimension: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,36 +31,32 @@ class LocationFilterFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnApplyFilterLocations.setOnClickListener {
-            navigator().openLocationsFragmentWithArg(type = null, dimension = null)
+            navigator().openLocationsFragmentWithArg(type = type, dimension = dimension)
             dismiss()
         }
 
         binding.btnFilterLocationsDimension.setOnClickListener {
-            dimensions = getOtherParams(listOf<String>("type", "2", "3", "4"), "Dimensions types")
+            dimension = getFilter(listOf<String>("type", "2", "3", "4"), "Dimensions types")
         }
 
         binding.btnFilterLocationsType.setOnClickListener {
-            types = getOtherParams(listOf<String>("type", "2", "3", "4"), "Location types")
+            type = getFilter(listOf<String>("type", "2", "3", "4"), "Location types")
         }
     }
 
 
-    private fun getOtherParams(params: List<String>, paramsType: String): List<String>? {
+    private fun getFilter(params: List<String>, paramsType: String): String? {
 
         val typesArr = params.toTypedArray()
-        val checkedItems: BooleanArray = typesArr.map { false }.toBooleanArray()
-
-        val result = ArrayList<String>()
+        var result: String? = null
 
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle(paramsType)
-            .setMultiChoiceItems(
+            .setSingleChoiceItems(
                 typesArr,
-                checkedItems
-            ) { _, which, isChecked ->
-                if (isChecked) {
-                    result.add(typesArr[which])
-                }
+                -1,
+            ) { _, which ->
+                result = typesArr[which]
             }
             .setPositiveButton(
                 "Confirm"

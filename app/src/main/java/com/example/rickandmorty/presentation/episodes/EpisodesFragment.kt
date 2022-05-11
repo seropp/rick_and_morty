@@ -6,11 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
-import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentEpisodesBinding
-import com.example.rickandmorty.presentation.characters.CharactersFragment
 import com.example.rickandmorty.presentation.navigator
 
 class EpisodesFragment : Fragment() {
