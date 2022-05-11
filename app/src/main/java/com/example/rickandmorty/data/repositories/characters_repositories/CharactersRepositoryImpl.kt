@@ -1,6 +1,7 @@
 package com.example.rickandmorty.data.repositories.characters_repositories
 
 import androidx.paging.*
+import com.example.rickandmorty.data.mapper.entity_to_domain_model.CharacterDtoToDomainModel
 import com.example.rickandmorty.data.mapper.entity_to_domain_model.CharacterEntityToDomainModel
 import com.example.rickandmorty.data.paging.characters_paging.CharactersRemoteMediator
 import com.example.rickandmorty.data.remote.api.chatacters.CharactersApi
@@ -16,22 +17,19 @@ class CharactersRepositoryImpl(
     private val db: RickAndMortyDatabase
 ) : CharactersRepository {
 
+
     @ExperimentalPagingApi
-    override fun getAllCharacters(): Flow<PagingData<CharacterModel>> {
-
-        val a: Flow<PagingData<CharacterEntity>> = Pager(
-            config = PagingConfig(pageSize = 20, prefetchDistance = 2),
-            remoteMediator = CharactersRemoteMediator(charactersApi, db)
-        ) {
-            db.getCharacterDao().getAllCharacters()
-        }.flow
-
-        return a.map { pagingData ->
-            pagingData.map { it ->
-                CharacterEntityToDomainModel().transform(it)
-            }
+    override fun getAllCharacters(): Flow<PagingData<CharacterModel>> = Pager(
+        config = PagingConfig(pageSize = 20, prefetchDistance = 2),
+        remoteMediator = CharactersRemoteMediator(charactersApi, db)
+    ) {
+        db.getCharacterDao().getAllCharacters()
+    }.flow.map { pagingData ->
+        pagingData.map { it ->
+            CharacterEntityToDomainModel().transform(it)
         }
     }
+
 
     override fun getAllCharactersByFilters(
         name: String?,

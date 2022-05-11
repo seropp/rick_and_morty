@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
@@ -26,6 +27,7 @@ import kotlinx.coroutines.launch
 class CharactersFragment : Fragment() {
 
     private lateinit var binding: FragmentCharactersBinding
+    private var charactersAdapter: CharactersAdapter? = null
     private var gender: String? = null
     private var status: String? = null
     private var species: String? = null
@@ -83,7 +85,6 @@ class CharactersFragment : Fragment() {
 
         binding.charactersLabel.setOnClickListener {
             Toast.makeText(requireContext(), "$gender, $status, $species, $type", Toast.LENGTH_SHORT).show()
-            vm.getCharacters()
         }
 
     }
@@ -103,6 +104,7 @@ class CharactersFragment : Fragment() {
                 charactersAdapter.submitData(it)
             }
         }
+
     }
 
 //    private fun setupSwipeToRefresh() {

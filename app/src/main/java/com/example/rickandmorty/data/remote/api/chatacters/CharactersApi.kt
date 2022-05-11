@@ -11,6 +11,14 @@ interface CharactersApi {
 
     /**
      * Get character page.
+     * @return - Response from the server.
+     */
+    @GET("character/?page={page}")
+    suspend fun getCharacters(
+    ): List<CharacterDto>
+
+    /**
+     * Get character page.
      * @param page - Character page.
      * @return - Response from the server.
      */
@@ -18,6 +26,7 @@ interface CharactersApi {
     suspend fun getCharacterPage(
         @Path("page") page: Int
     ): Response<PagedResponse<CharacterDto>>
+
 
     /**
      * Get characters by id.

@@ -1,5 +1,6 @@
 package com.example.rickandmorty.data.paging.characters_paging
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -38,7 +39,7 @@ class CharactersRemoteMediator(
                     lastItem.id
                 }
             }
-
+            Log.e("TAGGGGGGGGGGGGGGGGGG", "2")
             val response = charactersApi.getCharacterPage(loadKey ?: 1)
             val resBody = response.body()
 

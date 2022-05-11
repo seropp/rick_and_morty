@@ -1,6 +1,7 @@
 package com.example.rickandmorty.data.paging.characters_paging
 
 import android.net.Uri
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.rickandmorty.data.mapper.dto_to_entity.CharacterDtoToEntity
@@ -31,6 +32,7 @@ class CharactersPagingDataSource(
                 val nextPageQuery = uri.getQueryParameter("page")
                 nextPageNumber = nextPageQuery?.toInt()
             }
+            Log.e("TAGGGGGGGGGGGGGGGGGG", "3")
 
             LoadResult.Page(
                 data = mapList.orEmpty(),

@@ -12,9 +12,11 @@ import com.example.rickandmorty.domain.use_cases.characters.characters_usecases.
 import com.example.rickandmorty.presentation.adapters.characters_adapter.CharactersListener
 import com.example.rickandmorty.presentation.mapper.domain_model_to_presentation.GetCharacterPresentationModel
 import com.example.rickandmorty.presentation.models.character.CharacterPresentation
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlin.coroutines.coroutineContext
 
 
@@ -29,10 +31,6 @@ class CharactersViewModel(
                 GetCharacterPresentationModel().transform(it)
             }
         }.cachedIn(viewModelScope)
-
-    fun getCharacters(){
-        getAllCharactersUseCase.execute()
-    }
 
     override fun onItemClick(id: Int) {
         val a = 3
