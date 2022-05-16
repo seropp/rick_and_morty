@@ -10,7 +10,7 @@ interface CharactersRepository {
     @ExperimentalPagingApi
     fun getAllCharacters(): Flow<PagingData<CharacterModel>>
 
-    fun getAllCharactersByFilters(
+    suspend fun getAllCharactersByFilters(
         name: String?,
         status: String?,
         gender: String?,
@@ -18,6 +18,6 @@ interface CharactersRepository {
         species: String?
     ): List<CharacterModel>
 
-    fun getAllCharactersByIds(ids: List<Int>): List<CharacterModel>
+    suspend fun getAllCharactersByIds(ids: List<Int>): List<CharacterModel>
 
 }

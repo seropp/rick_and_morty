@@ -9,12 +9,18 @@ class EpisodeEntityToDomainModel :
 
     override fun transform(data: Episode): EpisodeModel {
 
+        val residentsIds: List<Int> = data.characters.mapNotNull { residents ->
+            residents.dropWhile { char ->
+                !char.isDigit()
+            }.toIntOrNull()
+        }
+
         return EpisodeModel(
             id = data.id,
             name = data.name,
             episode = data.episode,
             air_date = data.air_date,
-            residentsIds = data.residentsIds
+            residentsIds = residentsIds
         )
     }
 }

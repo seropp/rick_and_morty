@@ -15,7 +15,6 @@ class CharactersRepositoryImpl(
     private val db: RickAndMortyDatabase
 ) : CharactersRepository {
 
-
     @OptIn(ExperimentalPagingApi::class)
     override fun getAllCharacters(): Flow<PagingData<CharacterModel>> {
 
@@ -35,7 +34,7 @@ class CharactersRepositoryImpl(
         }
     }
 
-    override fun getAllCharactersByFilters(
+    override suspend fun getAllCharactersByFilters(
         name: String?,
         status: String?,
         gender: String?,
@@ -45,7 +44,9 @@ class CharactersRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun getAllCharactersByIds(ids: List<Int>): List<CharacterModel> {
+    override suspend fun getAllCharactersByIds(ids: List<Int>): List<CharacterModel> {
         TODO("Not yet implemented")
     }
+
+
 }

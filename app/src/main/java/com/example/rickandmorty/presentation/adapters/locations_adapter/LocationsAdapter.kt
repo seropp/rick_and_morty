@@ -5,21 +5,23 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.example.rickandmorty.R
+import com.example.rickandmorty.presentation.models.episode.EpisodePresentation
 import com.example.rickandmorty.presentation.models.location.LocationPresentation
 
-class LocationsAdapter(
-    var listener: LocationsListener
-) : PagingDataAdapter<LocationPresentation, LocationsViewHolder>(LocationsDiffCallback()) {
+class LocationsAdapter : PagingDataAdapter<LocationPresentation, LocationsViewHolder>(LocationsDiffCallback()) {
+
+    var onLocationItem: ((LocationPresentation) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LocationsViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_locations, parent, false),
-            listener = listener
-        )
+            LayoutInflater.from(parent.context).inflate(R.layout.item_locations, parent, false))
 
 
     override fun onBindViewHolder(holderContacts: LocationsViewHolder, position: Int) {
         getItem(position)?.let { holderContacts.bind(it) }
+        holderContacts.itemView.setOnClickListener {
+            onLocationItem?.invoke(getItem(position)!!)
+        }
     }
 
     private class LocationsDiffCallback : DiffUtil.ItemCallback<LocationPresentation>() {

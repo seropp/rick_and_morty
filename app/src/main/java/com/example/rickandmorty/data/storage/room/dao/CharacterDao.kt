@@ -84,7 +84,7 @@ interface CharacterDao {
         WHERE id IN (:ids)
         ORDER BY id ASC"""
     )
-    fun getCharactersByIds(ids: List<Int>): Flow<List<Characters>>
+    suspend fun getCharactersByIds(ids: List<Int>): List<Characters>
 
     /**
      * Get character by id
@@ -92,7 +92,7 @@ interface CharacterDao {
      * @param id - Character id.
      */
     @Query("SELECT * FROM CHARACTERS_TABLE WHERE id = :id")
-    suspend fun getCharacterById(id: Int): Characters?
+    suspend fun getCharacterById(id: Int): Characters
 
     /**
      * Get all types from db.

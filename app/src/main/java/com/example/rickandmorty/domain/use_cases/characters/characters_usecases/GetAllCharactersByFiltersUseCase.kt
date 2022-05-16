@@ -7,7 +7,7 @@ class GetAllCharactersByFiltersUseCase(
     private val charactersRepository: CharactersRepository
 ) {
 
-    fun execute(
+    suspend fun execute(
         name: String?,
         status: String?,
         gender: String?,

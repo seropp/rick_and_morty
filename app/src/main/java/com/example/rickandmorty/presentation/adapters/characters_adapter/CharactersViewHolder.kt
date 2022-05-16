@@ -1,6 +1,5 @@
 package com.example.rickandmorty.presentation.adapters.characters_adapter
 
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import com.bumptech.glide.Glide
@@ -11,8 +10,7 @@ import com.example.rickandmorty.presentation.models.character.CharacterPresentat
 
 
 class CharactersViewHolder(
-    itemView: View,
-    private val listener: CharactersListener,
+    itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val binding = ItemCharactersBinding.bind(itemView)
@@ -36,9 +34,5 @@ class CharactersViewHolder(
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .centerCrop()
             .into(characterImage)
-
-        characterCard.setOnClickListener {
-            listener.onItemClick(id = item.id)
-        }
     }
 }

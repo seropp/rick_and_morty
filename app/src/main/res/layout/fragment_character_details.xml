@@ -24,16 +24,43 @@
         app:layout_constraintTop_toTopOf="@+id/guideline1" />
 
     <TextView
-        android:id="@+id/character_status"
+        android:id="@+id/character_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/distance_horizontal"
         android:layout_marginTop="@dimen/chain_vertical"
+        android:text="@string/character_name"
+        android:textColor="@color/light_pink"
+        android:textSize="@dimen/detail_name"
+        app:layout_constraintBottom_toTopOf="@+id/character_status"
+        app:layout_constraintStart_toEndOf="@+id/character_image"
+        app:layout_constraintTop_toTopOf="@+id/guideline1" />
+
+    <TextView
+        android:id="@+id/character_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/distance_horizontal"
+        android:layout_marginTop="@dimen/distance_between_text"
         android:text="@string/status"
+        android:textColor="@color/light_pink"
+        android:textSize="@dimen/item_name"
+        app:layout_constraintBottom_toTopOf="@+id/character_type"
+        app:layout_constraintStart_toEndOf="@+id/character_image"
+        app:layout_constraintTop_toBottomOf="@+id/character_name" />
+
+    <TextView
+        android:id="@+id/character_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/distance_horizontal"
+        android:layout_marginTop="@dimen/distance_between_text"
+        android:text="@string/type"
+        android:textColor="@color/light_pink"
         android:textSize="@dimen/item_name"
         app:layout_constraintBottom_toTopOf="@+id/character_specie"
         app:layout_constraintStart_toEndOf="@+id/character_image"
-        app:layout_constraintTop_toTopOf="@+id/guideline1" />
+        app:layout_constraintTop_toBottomOf="@+id/character_status" />
 
     <TextView
         android:id="@+id/character_specie"
@@ -42,10 +69,11 @@
         android:layout_marginStart="@dimen/distance_horizontal"
         android:layout_marginTop="@dimen/distance_between_text"
         android:text="@string/specie"
+        android:textColor="@color/light_pink"
         android:textSize="@dimen/item_name"
         app:layout_constraintBottom_toTopOf="@+id/character_gender"
         app:layout_constraintStart_toEndOf="@+id/character_image"
-        app:layout_constraintTop_toBottomOf="@+id/character_status" />
+        app:layout_constraintTop_toBottomOf="@+id/character_type" />
 
     <TextView
         android:id="@+id/character_gender"
@@ -54,6 +82,7 @@
         android:layout_marginStart="@dimen/distance_horizontal"
         android:layout_marginTop="@dimen/distance_between_text"
         android:text="@string/gender_c"
+        android:textColor="@color/light_pink"
         android:textSize="@dimen/item_name"
         app:layout_constraintBottom_toTopOf="@+id/character_origin"
         app:layout_constraintStart_toEndOf="@+id/character_image"
@@ -68,7 +97,9 @@
         android:clickable="true"
         android:focusable="true"
         android:text="@string/origin"
+        android:textColor="@color/light_pink"
         android:textSize="@dimen/item_name"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/character_location"
         app:layout_constraintStart_toEndOf="@+id/character_image"
         app:layout_constraintTop_toBottomOf="@+id/character_gender" />
@@ -83,7 +114,9 @@
         android:clickable="true"
         android:focusable="true"
         android:text="@string/last_location"
+        android:textColor="@color/light_pink"
         android:textSize="@dimen/item_name"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/character_image"
         app:layout_constraintStart_toEndOf="@+id/character_image"
         app:layout_constraintTop_toBottomOf="@+id/character_origin" />
@@ -93,6 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/distance_horizontal"
         android:text="@string/episodes"
+        android:textColor="@color/light_pink"
         android:textSize="@dimen/label_size"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,14 +137,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="267dp" />
+        app:layout_constraintGuide_begin="255dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_character_detail"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/distance_horizontal"
-        android:layout_marginTop="@dimen/distance_vertical"
         android:layout_marginEnd="@dimen/distance_horizontal"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"

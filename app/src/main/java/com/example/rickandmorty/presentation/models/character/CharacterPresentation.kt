@@ -8,8 +8,8 @@ data class CharacterPresentation(
     val species: String,
     val type: String,
     val gender: String,
-    val originLocation: Int?,
-    val lastLocation: Int?,
+    val originLocation: Map<String, String>,
+    val lastLocation: Map<String, String>,
     val imageUrl: String,
-    val episodeIds: List<Int>?,
+    val episodeIds: List<Int>
 )

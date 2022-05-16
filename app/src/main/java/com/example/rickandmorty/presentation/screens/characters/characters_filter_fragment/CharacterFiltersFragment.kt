@@ -14,9 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.rickandmorty.databinding.FragmentCharactersFilterBinding
 import com.example.rickandmorty.presentation.navigator
-import com.example.rickandmorty.presentation.screens.episodes.episodes_filter_fragment.EpisodeFilterViewModelProvider
-import com.example.rickandmorty.presentation.screens.episodes.episodes_filter_fragment.EpisodeFiltersViewModel
-import com.example.rickandmorty.presentation.screens.locations.locations_filter_fragment.LocationFiltersViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.launch

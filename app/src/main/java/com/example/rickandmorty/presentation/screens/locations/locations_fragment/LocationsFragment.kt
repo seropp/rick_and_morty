@@ -92,13 +92,14 @@ class LocationsFragment : Fragment() {
     }
 
     private fun initView() {
-        locationsAdapter = LocationsAdapter(listener = vm)
+        locationsAdapter = LocationsAdapter()
 
         with(binding.rvLocations) {
             layoutManager = LinearLayoutManager(requireContext())
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = locationsAdapter
         }
+        locationsAdapter!!.onLocationItem = {navigator().openLocationsDetailFragment(it.id)}
     }
 
     private fun collectUiState() {

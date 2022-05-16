@@ -19,7 +19,7 @@ class GetCharacterPresentationModel :
             originLocation = data.originLocation,
             lastLocation = data.lastLocation,
             imageUrl = data.imageUrl,
-            episodeIds = data.episodeIds
+            episodeIds = data.episodeIds,
         )
     }
 }

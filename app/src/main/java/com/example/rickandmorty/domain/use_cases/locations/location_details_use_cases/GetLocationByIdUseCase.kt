@@ -2,16 +2,12 @@ package com.example.rickandmorty.domain.use_cases.locations.location_details_use
 
 import com.example.rickandmorty.domain.models.location.LocationModel
 import com.example.rickandmorty.domain.repositories.locations_repositories.LocationDetailsRepository
+import kotlinx.coroutines.flow.Flow
 
 class GetLocationByIdUseCase(
     private val locationDetailsRepository: LocationDetailsRepository
 ) {
 
-    fun execute(
-        id: Int
-    ): LocationModel {
-        return locationDetailsRepository.getLocationById(
-            id = id
-        )
-    }
+    suspend fun execute(id: Int): LocationModel =
+        locationDetailsRepository.getLocationById(id = id)
 }

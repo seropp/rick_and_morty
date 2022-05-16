@@ -9,12 +9,17 @@ class LocationEntityToDomainModel :
 
     override fun transform(data: Location): LocationModel {
 
+        val residentsIds: List<Int> = data.residents.mapNotNull { residents ->
+            residents.dropWhile { char ->
+                !char.isDigit()
+            }.toIntOrNull()
+        }
         return LocationModel(
             id = data.id,
             name = data.name,
             type = data.type,
             dimension = data.dimension,
-            residentsIds = data.residentsIds
+            residentsIds = residentsIds
         )
     }
 }

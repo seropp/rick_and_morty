@@ -8,10 +8,10 @@ interface EpisodesRepository {
 
     fun getAllEpisodes(): Flow<PagingData<EpisodeModel>>
 
-    fun getAllEpisodesByFilters(
+    suspend fun getAllEpisodesByFilters(
         name: String?,
         episode: String?
     ): List<EpisodeModel>
 
-    fun getAllEpisodesByIds(ids: List<Int>): List<EpisodeModel>
+    suspend fun getAllEpisodesByIds(ids: List<Int>): List<EpisodeModel>
 }

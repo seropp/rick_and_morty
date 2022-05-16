@@ -7,7 +7,7 @@ class GetAllLocationsByFiltersUseCase(
     private val locationsRepository: LocationsRepository
 ) {
 
-    fun execute(
+    suspend fun execute(
         name: String?,
         type: String?,
         dimension: String?

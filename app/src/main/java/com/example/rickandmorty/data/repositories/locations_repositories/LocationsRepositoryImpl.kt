@@ -36,7 +36,7 @@ class LocationsRepositoryImpl(
         }
     }
 
-    override fun getAllLocationsByFilters(
+    override suspend fun getAllLocationsByFilters(
         name: String?,
         type: String?,
         dimension: String?
@@ -44,7 +44,9 @@ class LocationsRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun getAllLocationsByIds(ids: List<Int>): List<LocationModel> {
+    override suspend fun getAllLocationsByIds(ids: List<Int>): List<LocationModel> {
         TODO("Not yet implemented")
     }
+
+
 }

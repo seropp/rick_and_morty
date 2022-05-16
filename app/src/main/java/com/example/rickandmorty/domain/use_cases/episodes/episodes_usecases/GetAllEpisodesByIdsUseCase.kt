@@ -7,7 +7,7 @@ class GetAllEpisodesByIdsUseCase(
     private val episodesRepository: EpisodesRepository
 ) {
 
-    fun execute(
+    suspend fun execute(
         ids: List<Int>
     ): List<EpisodeModel> {
         return episodesRepository.getAllEpisodesByIds(ids = ids)

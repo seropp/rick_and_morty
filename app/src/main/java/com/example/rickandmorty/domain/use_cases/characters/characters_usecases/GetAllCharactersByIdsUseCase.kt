@@ -7,7 +7,7 @@ class GetAllCharactersByIdsUseCase(
     private val charactersRepository: CharactersRepository
 ) {
 
-    fun execute(
+    suspend fun execute(
         ids: List<Int>
     ): List<CharacterModel> {
         return charactersRepository.getAllCharactersByIds(

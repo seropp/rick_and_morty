@@ -19,11 +19,11 @@ import com.example.rickandmorty.presentation.screens.locations.locations_fragmen
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+
 @ExperimentalPagingApi
 class RootActivity : AppCompatActivity(), Navigator {
 
     private val vm: SplashScreenViewModel by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

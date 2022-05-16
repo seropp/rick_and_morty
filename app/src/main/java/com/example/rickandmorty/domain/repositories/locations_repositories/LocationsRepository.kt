@@ -8,11 +8,11 @@ interface LocationsRepository {
 
     fun getAllLocations(): Flow<PagingData<LocationModel>>
 
-    fun getAllLocationsByFilters(
+    suspend fun getAllLocationsByFilters(
         name: String?,
         type: String?,
         dimension: String?
     ): List<LocationModel>
 
-    fun getAllLocationsByIds(ids: List<Int>): List<LocationModel>
+    suspend fun getAllLocationsByIds(ids: List<Int>): List<LocationModel>
 }

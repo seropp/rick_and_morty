@@ -7,7 +7,7 @@ class GetAllLocationsByIdsUseCase(
     private val locationsRepository: LocationsRepository
 ) {
 
-    fun execute(
+    suspend fun execute(
         ids: List<Int>
     ): List<LocationModel> {
         return locationsRepository.getAllLocationsByIds(

@@ -1,20 +1,36 @@
 package com.example.rickandmorty.presentation.screens.characters.character_details_fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.*
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentCharacterDetailsBinding
+import com.example.rickandmorty.presentation.adapters.character_details_adapter.CharacterDetailsAdapter
+import com.example.rickandmorty.presentation.adapters.characters_adapter.CharactersAdapter
+import com.example.rickandmorty.presentation.models.character.CharacterPresentation
 import com.example.rickandmorty.presentation.navigator
+import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 
 class CharacterDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentCharacterDetailsBinding
+    private lateinit var vm: CharacterDetailsViewModel
+    private var characterDetailsAdapter: CharacterDetailsAdapter? = null
 
     private var characterId by Delegates.notNull<Int>()
+    private var lastLocationId: Int? = null
+    private var originLocationId: Int? = null
 
     companion object {
         private const val KEY_CHARACTER_ID: String = "KEY_CHARACTER_ID"
@@ -46,15 +62,89 @@ class CharacterDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        vm = ViewModelProvider(
+            this,
+            CharacterDetailsViewModelProvider(requireContext())
+        )[CharacterDetailsViewModel::class.java]
+        vm.getCharacter(characterId)
+        initView()
+        observeVm()
+
         binding.characterOrigin.setOnClickListener {
-            val id = 1
-            navigator().openLocationsDetailFragment(locationId = id)
+            if (originLocationId != null) {
+                navigator().openLocationsDetailFragment(locationId = originLocationId!!)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Character's place of origin unknown.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         binding.characterLocation.setOnClickListener {
-            val id = 1
-            navigator().openLocationsDetailFragment(locationId = id)
+            if (lastLocationId != null) {
+                navigator().openLocationsDetailFragment(locationId = lastLocationId!!)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Character's last location is unknown.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
+    }
+
+    private fun initView() {
+        characterDetailsAdapter = CharacterDetailsAdapter()
+
+        with(binding.rvCharacterDetail) {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = characterDetailsAdapter
+        }
+        characterDetailsAdapter!!.onEpisodeItem = {navigator().openEpisodesDetailFragment(it.id)}
+    }
+
+    private fun observeVm() {
+        lifecycle.coroutineScope.launch {
+            vm.episodesList.observe(viewLifecycleOwner, Observer {
+                Log.e("Logeeee", "$it")
+                characterDetailsAdapter!!.submitList(it)
+            })
+        }
+
+        lifecycle.coroutineScope.launch {
+            vm.characterDetails.observe(viewLifecycleOwner, Observer {
+                vm.getEpisodesList(it.episodeIds)
+                initUI(it)
+            })
+        }
+    }
+
+    private fun initUI(characterDetails: CharacterPresentation) {
+        if (characterDetails.lastLocation.getValue("location_id").isNotEmpty()) {
+            lastLocationId = characterDetails.lastLocation.getValue("location_id").toInt()
+        }
+        if (characterDetails.originLocation.getValue("location_id").isNotEmpty()) {
+            originLocationId = characterDetails.originLocation.getValue("location_id").toInt()
+        }
+        Glide.with(requireContext())
+            .load(characterDetails.imageUrl)
+            .placeholder(R.drawable.ic_loading)
+            .error(R.drawable.ic_dissconect)
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .centerCrop()
+            .into(binding.characterImage)
+
+        binding.characterName.text = "Name: ${characterDetails.name}"
+        binding.characterStatus.text = "Status: ${characterDetails.status}"
+        binding.characterType.text = "Type: ${characterDetails.type}"
+        binding.characterSpecie.text = "Species: ${characterDetails.species}"
+        binding.characterGender.text = "Gender: ${characterDetails.gender}"
+        binding.characterLocation.text =
+            "Location: ${characterDetails.lastLocation.getValue("location_name")}"
+        binding.characterOrigin.text =
+            "Origin: ${characterDetails.originLocation.getValue("location_name")}"
     }
 
     private fun init() {

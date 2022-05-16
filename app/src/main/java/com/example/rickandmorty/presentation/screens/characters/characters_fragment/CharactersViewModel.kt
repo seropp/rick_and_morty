@@ -5,9 +5,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
-
 import com.example.rickandmorty.domain.use_cases.characters.characters_usecases.GetAllCharactersUseCase
-import com.example.rickandmorty.presentation.adapters.characters_adapter.CharactersListener
 import com.example.rickandmorty.presentation.mapper.domain_model_to_presentation.GetCharacterPresentationModel
 import com.example.rickandmorty.presentation.models.character.CharacterPresentation
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +15,10 @@ import kotlinx.coroutines.flow.map
 @ExperimentalPagingApi
 class CharactersViewModel(
     private val getAllCharactersUseCase: GetAllCharactersUseCase
-) : ViewModel(), CharactersListener {
+) : ViewModel() {
+
+    private val _transferContact = MutableLiveData<Int?>()
+    val transferContact = _transferContact
 
     private var _charactersFlow: Flow<PagingData<CharacterPresentation>> =
         getAllCharactersUseCase.execute().map { pagingData ->
@@ -28,7 +29,4 @@ class CharactersViewModel(
 
     val charactersFlow: Flow<PagingData<CharacterPresentation>> = _charactersFlow
 
-    override fun onItemClick(id: Int) {
-        val a = 3
-    }
 }

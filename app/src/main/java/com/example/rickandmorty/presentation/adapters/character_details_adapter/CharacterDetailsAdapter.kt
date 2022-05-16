@@ -1,30 +1,31 @@
-package com.example.rickandmorty.presentation.adapters.episodes_adapter
+package com.example.rickandmorty.presentation.adapters.character_details_adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.example.rickandmorty.R
-import com.example.rickandmorty.presentation.models.character.CharacterPresentation
 import com.example.rickandmorty.presentation.models.episode.EpisodePresentation
 
-class EpisodesAdapter : PagingDataAdapter<EpisodePresentation, EpisodesViewHolder>(EpisodesDiffCallback()) {
+class CharacterDetailsAdapter(
+) : ListAdapter<EpisodePresentation, CharacterDetailsViewHolder>(CharacterDetailsDiffCallback()) {
 
     var onEpisodeItem: ((EpisodePresentation) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        EpisodesViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_episodes, parent, false))
+        CharacterDetailsViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_episodes_in_characters, parent, false)
+        )
 
-
-    override fun onBindViewHolder(holderContacts: EpisodesViewHolder, position: Int) {
+    override fun onBindViewHolder(holderContacts: CharacterDetailsViewHolder, position: Int) {
         getItem(position)?.let { holderContacts.bind(it) }
         holderContacts.itemView.setOnClickListener {
             onEpisodeItem?.invoke(getItem(position)!!)
         }
     }
 
-    private class EpisodesDiffCallback : DiffUtil.ItemCallback<EpisodePresentation>() {
+    private class CharacterDetailsDiffCallback : DiffUtil.ItemCallback<EpisodePresentation>() {
 
         override fun areItemsTheSame(
             oldItem: EpisodePresentation,

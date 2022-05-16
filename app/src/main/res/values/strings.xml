@@ -46,5 +46,6 @@
     <string name="select_dimension">Select dimension</string>
     <string name="search_episode">Search Episode</string>
     <string name="search_location">Search Location</string>
+    <string name="character_name">Character name</string>
 
 </resources>

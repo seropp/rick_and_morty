@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/distance_horizontal"
-    android:layout_marginTop="@dimen/distance_vertical"
+    android:layout_marginTop="@dimen/item_horizontal_distance"
     android:layout_marginEnd="@dimen/distance_horizontal"
     android:backgroundTint="@color/splash_screen"
     app:cardCornerRadius="@dimen/radius_shape">
@@ -25,7 +24,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/linear_episode_detail_charac"
             android:layout_height="match_parent"
             android:ellipsize="end"
             android:orientation="vertical"
@@ -43,7 +42,7 @@
                 android:layout_marginBottom="@dimen/item_vertical_distance"
                 android:text="@string/episodes_item"
                 android:textColor="@color/white"
-                android:textSize="@dimen/item_name"
+                android:textSize="@dimen/episode_in_character_details"
                 android:textStyle="bold" />
 
             <TextView
@@ -56,7 +55,7 @@
                 android:layout_marginBottom="@dimen/item_vertical_distance"
                 android:text="@string/date"
                 android:textColor="@color/white"
-                android:textSize="@dimen/add_info_item" />
+                android:textSize="@dimen/episode_data_character_details" />
 
         </LinearLayout>
 

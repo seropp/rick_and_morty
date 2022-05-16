@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.ExperimentalPagingApi
 import com.example.rickandmorty.data.remote.api.RetrofitInstance
+import com.example.rickandmorty.data.remote.api.episodes.EpisodesApi
 import com.example.rickandmorty.data.repositories.episodes_repositories.EpisodesRepositoryImpl
 import com.example.rickandmorty.data.storage.room.db.RickAndMortyDatabase
 import com.example.rickandmorty.domain.use_cases.episodes.episodes_usecases.GetAllEpisodesUseCase
@@ -15,7 +16,15 @@ class EpisodesViewModelProvider(
 ) : ViewModelProvider.Factory {
 
     private val retrofitInstance by lazy {
-        RetrofitInstance.episodesApi
+        RetrofitInstance
+    }
+
+    private val episodeDetailsApi by lazy {
+        retrofitInstance.episodeDetailsApi
+    }
+
+    private val episodesApi by lazy {
+        retrofitInstance.episodesApi
     }
 
     private val db by lazy {
@@ -23,7 +32,11 @@ class EpisodesViewModelProvider(
     }
 
     private val episodesRepository by lazy {
-        EpisodesRepositoryImpl(db = db, episodesApi = retrofitInstance)
+        EpisodesRepositoryImpl(
+            db = db,
+            episodeDetailsApi = episodeDetailsApi,
+            episodesApi = episodesApi
+        )
     }
 
     private val getAllEpisodesUseCase by lazy {

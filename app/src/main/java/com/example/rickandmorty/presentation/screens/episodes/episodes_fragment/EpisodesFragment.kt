@@ -86,13 +86,14 @@ class EpisodesFragment : Fragment() {
     }
 
     private fun initView() {
-        episodesAdapter = EpisodesAdapter(listener = vm)
+        episodesAdapter = EpisodesAdapter()
 
         with(binding.rvEpisodes) {
             layoutManager = LinearLayoutManager(requireContext())
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = episodesAdapter
         }
+        episodesAdapter!!.onEpisodeItem = {navigator().openEpisodesDetailFragment(it.id)}
     }
 
     private fun collectUiState() {

@@ -72,7 +72,7 @@ interface LocationDao {
      * @param id - Location id.
      */
     @Query("SELECT * FROM LOCATIONS_TABLE WHERE id = :id")
-    fun getLocationById(id: Int): Location?
+    suspend fun getLocationById(id: Int): Location
 
     /**
      * Get all types from db.

@@ -7,7 +7,7 @@ class GetAllEpisodesByFiltersUseCase(
     private val episodesRepository: EpisodesRepository
 ) {
 
-    fun execute(
+    suspend fun execute(
         name: String?,
         episode: String?
     ): List<EpisodeModel> {

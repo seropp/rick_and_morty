@@ -4,5 +4,5 @@ import com.example.rickandmorty.domain.models.episode.EpisodeModel
 
 interface EpisodeDetailsRepository {
 
-    fun getEpisodeById(id: Int): EpisodeModel
+    suspend fun getEpisodeById(id: Int): EpisodeModel
 }

@@ -75,7 +75,7 @@ interface EpisodeDao {
         WHERE id IN (:ids)
         ORDER BY id ASC"""
     )
-    fun getEpisodesByIds(ids: List<Int>): Flow<List<Episode>>
+    suspend fun getEpisodesByIds(ids: List<Int>): List<Episode>
 
     /**
      * Get episode by id
@@ -83,7 +83,7 @@ interface EpisodeDao {
      * @param id - Episode id.
      */
     @Query("SELECT * FROM EPISODES_TABLE WHERE id = :id")
-    suspend fun getEpisodeById(id: Int): Episode?
+    suspend fun getEpisodeById(id: Int): Episode
 
     /**
      * Get all episodes from db.

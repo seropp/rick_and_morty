@@ -1,12 +1,12 @@
 package com.example.rickandmorty.presentation.screens.characters.characters_fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentCharactersBinding
 import com.example.rickandmorty.presentation.adapters.characters_adapter.CharactersAdapter
 import com.example.rickandmorty.presentation.navigator
-import kotlinx.android.synthetic.main.fragment_characters.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
@@ -88,6 +87,7 @@ class CharactersFragment : Fragment() {
 //        binding.swipeRefreshCharacters.setOnRefreshListener {
 //            charactersAdapter?.refresh()
 //        }
+
         binding.resetCharacters.setOnClickListener{
             charactersAdapter?.refresh()
         }
@@ -96,21 +96,17 @@ class CharactersFragment : Fragment() {
             navigator().openCharactersFilterFragment()
         }
 
-        binding.charactersLabel.setOnClickListener {
-
-        }
-
-
     }
 
     private fun initView() {
-        charactersAdapter = CharactersAdapter(listener = vm)
+        charactersAdapter = CharactersAdapter()
 
         with(binding.rvCharacters) {
             layoutManager = LinearLayoutManager(requireContext())
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = charactersAdapter
         }
+        charactersAdapter!!.onCharacterItem = {navigator().openCharacterDetailFragment(it.id)}
     }
 
     private fun collectUiState() {
