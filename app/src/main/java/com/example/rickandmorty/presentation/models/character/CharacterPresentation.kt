@@ -11,6 +11,5 @@ data class CharacterPresentation(
     val originLocation: Int?,
     val lastLocation: Int?,
     val imageUrl: String,
-    val episodeIds: List<Int>,
-    var page: Int?
+    val episodeIds: List<Int>?,
 )

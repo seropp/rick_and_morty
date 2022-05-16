@@ -4,18 +4,21 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.fragment.app.FragmentManager
 import androidx.paging.ExperimentalPagingApi
 import com.example.rickandmorty.R
-import com.example.rickandmorty.presentation.characters.character_details_fragment.CharacterDetailsFragment
-import com.example.rickandmorty.presentation.characters.characters_filter_fragment.CharactersFilterFragment
-import com.example.rickandmorty.presentation.characters.characters_fragment.CharactersFragment
-import com.example.rickandmorty.presentation.episodes.EpisodeDetailsFragment
-import com.example.rickandmorty.presentation.episodes.EpisodesFilterFragment
-import com.example.rickandmorty.presentation.episodes.EpisodesFragment
-import com.example.rickandmorty.presentation.locations.LocationDetailsFragment
-import com.example.rickandmorty.presentation.locations.LocationFilterFragment
-import com.example.rickandmorty.presentation.locations.LocationsFragment
+import com.example.rickandmorty.presentation.screens.characters.character_details_fragment.CharacterDetailsFragment
+import com.example.rickandmorty.presentation.screens.characters.characters_filter_fragment.CharacterFiltersFragment
+import com.example.rickandmorty.presentation.screens.characters.characters_fragment.CharactersFragment
+import com.example.rickandmorty.presentation.screens.episodes.episode_details_fragment.EpisodeDetailsFragment
+import com.example.rickandmorty.presentation.screens.episodes.episodes_filter_fragment.EpisodeFiltersFragment
+import com.example.rickandmorty.presentation.screens.episodes.episodes_fragment.EpisodesFragment
+import com.example.rickandmorty.presentation.screens.locations.location_details_fragment.LocationDetailsFragment
+import com.example.rickandmorty.presentation.screens.locations.locations_filter_fragment.LocationFiltersFragment
+import com.example.rickandmorty.presentation.screens.locations.locations_fragment.LocationsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 @ExperimentalPagingApi
 class RootActivity : AppCompatActivity(), Navigator {
 
@@ -32,7 +35,6 @@ class RootActivity : AppCompatActivity(), Navigator {
         }
         setContentView(R.layout.activity_root)
 
-//        val manager = supportFragmentManager
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .add(
@@ -41,11 +43,14 @@ class RootActivity : AppCompatActivity(), Navigator {
                     "ADD FIRST FRAGMENT"
                 ).commit()
         } else {
-            val backEntry =
-                supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
-
-            val tag = backEntry.name
-            supportFragmentManager.popBackStack(tag, 0)
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                supportFragmentManager.popBackStack("ADD FIRST FRAGMENT", 0)
+            } else {
+                val backEntry: FragmentManager.BackStackEntry =
+                    supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
+                val tag = backEntry.name
+                supportFragmentManager.popBackStack(tag, 0)
+            }
         }
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
@@ -68,9 +73,18 @@ class RootActivity : AppCompatActivity(), Navigator {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class, kotlinx.coroutines.FlowPreview::class)
     override fun onBackPressed() {
         super.onBackPressed()
-        if (supportFragmentManager.backStackEntryCount == 0) {
+        val fragment1: CharactersFragment? =
+            supportFragmentManager.findFragmentByTag("CHARACTERS_FRAGMENT") as CharactersFragment?
+        val fragment2: CharactersFragment? =
+            supportFragmentManager.findFragmentByTag("OPEN_CharactersFragmentWithArg") as CharactersFragment?
+        val fragment3: CharactersFragment? =
+            supportFragmentManager.findFragmentByTag("ADD FIRST FRAGMENT") as CharactersFragment?
+        if (fragment1 != null && fragment1.isVisible ||
+            fragment2 != null && fragment2.isVisible ||
+            fragment3 != null && fragment3.isVisible ) {
             finish()
         }
     }
@@ -83,9 +97,17 @@ class RootActivity : AppCompatActivity(), Navigator {
                 "CHARACTERS_FRAGMENT"
             ).addToBackStack("OPEN_CHARACTERS_FRAGMENT")
             .commit()
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
     override fun openEpisodesFragment() {
+        if ( supportFragmentManager.backStackEntryCount > 0 ) {
+            val backEntry: FragmentManager.BackStackEntry =
+                supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
+            val tag = backEntry.name
+            if(tag == "OPEN_EPISODE_FRAGMENT") return
+        }
+
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.container_navigator,
@@ -96,6 +118,13 @@ class RootActivity : AppCompatActivity(), Navigator {
     }
 
     override fun openLocationsFragment() {
+        if ( supportFragmentManager.backStackEntryCount > 0 ) {
+            val backEntry: FragmentManager.BackStackEntry =
+                supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
+            val tag = backEntry.name
+            if(tag == "OPEN_LOCATION_FRAGMENT") return
+        }
+
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.container_navigator,
@@ -106,18 +135,19 @@ class RootActivity : AppCompatActivity(), Navigator {
     }
 
     override fun openCharactersFilterFragment() {
-        CharactersFilterFragment().show(supportFragmentManager, "CHARACTERS_FILTER_FRAGMENT")
+        CharacterFiltersFragment().show(supportFragmentManager, "CHARACTERS_FILTER_FRAGMENT")
     }
 
     override fun openEpisodesFilterFragment() {
-        EpisodesFilterFragment().show(supportFragmentManager, "EPISODES_FILTER_FRAGMENT")
+        EpisodeFiltersFragment().show(supportFragmentManager, "EPISODES_FILTER_FRAGMENT")
     }
 
     override fun openLocationsFilterFragment() {
 
-        LocationFilterFragment().show(supportFragmentManager, "LOCATIONS_FILTER_FRAGMENT")
+        LocationFiltersFragment().show(supportFragmentManager, "LOCATIONS_FILTER_FRAGMENT")
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class, kotlinx.coroutines.FlowPreview::class)
     override fun openCharactersFragmentWithArg(
         status: String?,
         gender: String?,
@@ -138,6 +168,7 @@ class RootActivity : AppCompatActivity(), Navigator {
             .commit()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class, kotlinx.coroutines.FlowPreview::class)
     override fun openEpisodesFragmentWithArg(episode: String?) {
         supportFragmentManager.beginTransaction()
             .replace(
@@ -150,6 +181,7 @@ class RootActivity : AppCompatActivity(), Navigator {
             .commit()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class, kotlinx.coroutines.FlowPreview::class)
     override fun openLocationsFragmentWithArg(type: String?, dimension: String?) {
         supportFragmentManager.beginTransaction()
             .replace(

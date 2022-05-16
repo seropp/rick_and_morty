@@ -7,10 +7,10 @@
     <dimen name="distance_horizontal">15dp</dimen>
     <dimen name="zero">0dp</dimen>
     <dimen name="label_size">18sp</dimen>
-    <dimen name="item_name">16sp</dimen>
+    <dimen name="item_name">12sp</dimen>
     <dimen name="item_horizontal_distance">12dp</dimen>
     <dimen name="item_vertical_distance">2dp</dimen>
-    <dimen name="add_info_item">13sp</dimen>
+    <dimen name="add_info_item">9sp</dimen>
     <dimen name="gender_item">30dp</dimen>
     <dimen name="distance_between_text">5dp</dimen>
     <dimen name="filter_horizontal">12dp</dimen>

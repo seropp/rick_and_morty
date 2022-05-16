@@ -9,7 +9,6 @@ class GetCharacterPresentationModel :
 
     override fun transform(data: CharacterModel): CharacterPresentation {
 
-
         return CharacterPresentation(
             id = data.id,
             name = data.name,
@@ -18,10 +17,9 @@ class GetCharacterPresentationModel :
             type = data.type,
             gender = data.gender,
             originLocation = data.originLocation,
-            lastLocation =data. lastLocation,
+            lastLocation = data.lastLocation,
             imageUrl = data.imageUrl,
-            episodeIds = data.episodeIds,
-            page = data.page
+            episodeIds = data.episodeIds
         )
     }
 }

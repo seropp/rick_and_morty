@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/splash_screen"
-    tools:context=".presentation.episodes.EpisodeDetailsFragment">
+    tools:context=".presentation.screens.episodes.episode_details_fragment.EpisodeDetailsFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"

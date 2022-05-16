@@ -1,13 +1,13 @@
 package com.example.rickandmorty.data.mapper.entity_to_domain_model
 
 import com.example.rickandmorty.data.mapper.Mapper
-import com.example.rickandmorty.data.storage.room.entities.character.CharacterEntity
+import com.example.rickandmorty.data.models.characters.Characters
 import com.example.rickandmorty.domain.models.character.CharacterModel
 
 class CharacterEntityToDomainModel :
-    Mapper<CharacterEntity, CharacterModel> {
+    Mapper<Characters, CharacterModel> {
 
-    override fun transform(data: CharacterEntity): CharacterModel {
+    override fun transform(data: Characters): CharacterModel {
 
         return CharacterModel(
             id = data.id,
@@ -16,11 +16,10 @@ class CharacterEntityToDomainModel :
             status = data.status,
             type = data.type,
             gender = data.gender,
-            originLocation = data.originLocation,
-            lastLocation =data. lastLocation,
-            imageUrl = data.imageUrl,
+            originLocation = data.originId,
+            lastLocation =data.locationId,
+            imageUrl = data.image,
             episodeIds = data.episodeIds,
-            page = data.page
         )
     }
 }

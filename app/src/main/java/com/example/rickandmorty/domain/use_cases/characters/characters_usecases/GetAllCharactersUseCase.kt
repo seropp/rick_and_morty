@@ -1,5 +1,6 @@
 package com.example.rickandmorty.domain.use_cases.characters.characters_usecases
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import com.example.rickandmorty.domain.models.character.CharacterModel

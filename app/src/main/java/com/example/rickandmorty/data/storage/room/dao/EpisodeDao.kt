@@ -1,12 +1,10 @@
 package com.example.rickandmorty.data.storage.room.dao
 
-import androidx.paging.DataSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.example.rickandmorty.data.storage.room.entities.episode.EpisodeEntity
+import androidx.paging.PagingSource
+import androidx.room.*
+import com.example.rickandmorty.data.models.episodes.Episode
 import kotlinx.coroutines.flow.Flow
+
 
 @Dao
 interface EpisodeDao {
@@ -19,7 +17,23 @@ interface EpisodeDao {
      * @param episodes - Episodes List.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllEpisodes(episodes: List<EpisodeEntity?>?)
+    suspend fun insertAllEpisodes(episodes: List<Episode?>?)
+
+    /**
+     * Get all episodes with pagination.
+     *
+     * @return
+     */
+    @Query("SELECT * FROM EPISODES_TABLE")
+    fun getAllEpisodes(): PagingSource<Int, Episode>
+
+    /**
+     * Delete all episodes for pagination.
+     *
+     * @return
+     */
+    @Query("DELETE FROM EPISODES_TABLE")
+    suspend fun deleteAllEpisodes()
 
     /**
      * Add episode.
@@ -29,29 +43,7 @@ interface EpisodeDao {
      * @param episode - Episode.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertEpisode(episode: EpisodeEntity)
-
-    /**
-     * Get all episodes with pagination.
-     *
-     * @return
-     */
-    @Query("""SELECT * FROM episodes_table ORDER BY id ASC""")
-    fun getAllEpisodes(): DataSource.Factory<Int, EpisodeEntity>
-
-    /**
-     * Get all episodes by ids without pagination.
-     *
-     * @param ids - Episodes ids.
-     *
-     * @return
-     */
-    @Query(
-        """SELECT * FROM episodes_table
-        WHERE id IN (:ids)
-        ORDER BY id ASC"""
-    )
-    fun getEpisodesByIds(ids: List<Int>): List<EpisodeEntity>
+    suspend fun insertEpisode(episode: Episode)
 
     /**
      * Get all filtered episodes with pagination. (name, episode).
@@ -62,22 +54,36 @@ interface EpisodeDao {
      * @return
      */
     @Query(
-        """SELECT * FROM episodes_table
+        """SELECT * FROM EPISODES_TABLE
         WHERE name LIKE '%' || :name || '%'
         AND episode LIKE :episode"""
     )
-    fun getFilteredCharacters(
+    fun getFilteredEpisodes(
         name: String?,
         episode: String?,
-    ): Flow<List<EpisodeEntity>>
+    ): Flow<List<Episode>>
+
+    /**
+     * Get all episodes by ids without pagination.
+     *
+     * @param ids - Episodes ids.
+     *
+     * @return
+     */
+    @Query(
+        """SELECT * FROM EPISODES_TABLE
+        WHERE id IN (:ids)
+        ORDER BY id ASC"""
+    )
+    fun getEpisodesByIds(ids: List<Int>): Flow<List<Episode>>
 
     /**
      * Get episode by id
      *
      * @param id - Episode id.
      */
-    @Query("SELECT * FROM episodes_table WHERE id = :id")
-    fun getEpisodeById(id: Int): EpisodeEntity?
+    @Query("SELECT * FROM EPISODES_TABLE WHERE id = :id")
+    suspend fun getEpisodeById(id: Int): Episode?
 
     /**
      * Get all episodes from db.
@@ -85,13 +91,7 @@ interface EpisodeDao {
      * @return Flow with Episode's types.
      */
     @Query(
-        """SELECT episode FROM episodes_table"""
+        """SELECT episode FROM EPISODES_TABLE ORDER BY episode ASC"""
     )
     fun getEpisodes(): Flow<List<String>>
-
-    /**
-     * Delete all episodes from table (for mediator).
-     */
-    @Query("DELETE FROM episodes_table")
-    fun clearAllEpisodes()
 }

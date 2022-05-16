@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface GetEpisodeFiltersRepository {
 
-    fun getListEpisodes(): Flow<List<String>?>
+    fun getListEpisodes(): Flow<List<String>>
 }

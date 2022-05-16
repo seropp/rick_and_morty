@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/splash_screen"
     android:orientation="vertical"
-    tools:context=".presentation.episodes.EpisodesFilterFragment">
+    tools:context=".presentation.screens.episodes.episodes_filter_fragment.EpisodeFiltersFragment">
 
     <Button
         android:id="@+id/btn_filter_episodes_episodes"

@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface GetLocationFiltersRepository {
 
-    fun getListLocationsTypes(): Flow<List<String>?>
+    fun getListLocationsTypes(): Flow<List<String>>
 
-    fun getListLocationsDimensions(): Flow<List<String>?>
+    fun getListLocationsDimensions(): Flow<List<String>>
 }

@@ -1,7 +1,7 @@
 package com.example.rickandmorty.data.remote.api.chatacters
 
-import com.example.rickandmorty.data.remote.dto.characterDto.CharacterDto
-import com.example.rickandmorty.data.remote.dto.pagesInfo.PagedResponse
+import com.example.rickandmorty.data.models.characters.Characters
+import com.example.rickandmorty.data.models.PagedResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,22 +11,13 @@ interface CharactersApi {
 
     /**
      * Get character page.
-     * @return - Response from the server.
-     */
-    @GET("character/?page={page}")
-    suspend fun getCharacters(
-    ): List<CharacterDto>
-
-    /**
-     * Get character page.
      * @param page - Character page.
      * @return - Response from the server.
      */
-    @GET("character/?page={page}")
+    @GET("character/")
     suspend fun getCharacterPage(
-        @Path("page") page: Int
-    ): Response<PagedResponse<CharacterDto>>
-
+        @Query("page") page: Int
+    ): Response<PagedResponse<Characters>>
 
     /**
      * Get characters by id.
@@ -36,9 +27,7 @@ interface CharactersApi {
     @GET("character/{ids }")
     suspend fun getCharactersByIds(
         @Path("ids") ids: String
-    ): Response<PagedResponse<CharacterDto>>
-
-
+    ): Response<PagedResponse<Characters>>
 
     /**
      * Get character by filters.
@@ -56,5 +45,5 @@ interface CharactersApi {
         @Query("species") species: String?,
         @Query("type") type: String?,
         @Query("gender") gender: String?
-    ): Response<List<CharacterDto>>
+    ): Response<List<Characters>>
 }

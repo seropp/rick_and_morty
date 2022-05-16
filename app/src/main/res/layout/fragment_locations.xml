@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/splash_screen"
-    tools:context=".presentation.locations.LocationsFragment">
+    tools:context=".presentation.screens.locations.locations_fragment.LocationsFragment">
 
 
     <androidx.appcompat.widget.SearchView
@@ -58,35 +58,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_filter_locations" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_locations"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_locations"
         android:layout_width="@dimen/zero"
         android:layout_height="@dimen/zero"
-        android:layout_marginStart="@dimen/distance_horizontal"
-        android:layout_marginTop="@dimen/distance_vertical"
-        android:layout_marginEnd="@dimen/distance_horizontal"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locations_label"
-        app:layout_constraintVertical_bias="0.0"
-        app:spanCount="2"
-        tools:listitem="@layout/item_locations"
-        tools:orientation="vertical" />
+        app:layout_constraintTop_toBottomOf="@+id/locations_label">
 
-    <ProgressBar
-        android:id="@+id/progressBar_locations"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:foregroundGravity="center"
-        android:indeterminateTint="@color/yellow"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rv_locations" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_locations"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_marginStart="@dimen/distance_horizontal"
+            android:layout_marginTop="@dimen/distance_vertical"
+            android:layout_marginEnd="@dimen/distance_horizontal"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locations_label"
+            app:layout_constraintVertical_bias="0.0"
+            app:spanCount="2"
+            tools:listitem="@layout/item_locations"
+            tools:orientation="vertical" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <!--    <ProgressBar-->
+    <!--        android:id="@+id/progressBar_locations"-->
+    <!--        style="?android:attr/progressBarStyleLarge"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:foregroundGravity="center"-->
+    <!--        android:indeterminateTint="@color/yellow"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/rv_locations" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

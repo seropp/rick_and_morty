@@ -2,7 +2,7 @@ package com.example.rickandmorty.data.storage.room.dao
 
 import androidx.paging.PagingSource
 import androidx.room.*
-import com.example.rickandmorty.data.storage.room.entities.character.CharacterEntity
+import com.example.rickandmorty.data.models.characters.Characters
 import kotlinx.coroutines.flow.Flow
 
 
@@ -17,7 +17,23 @@ interface CharacterDao {
      * @param characters - Character List.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllCharacters(characters: List<CharacterEntity?>?)
+    suspend fun insertAllCharacters(characters: List<Characters?>?)
+
+    /**
+     * Get all characters with pagination.
+     *
+     * @return
+     */
+    @Query("SELECT * FROM CHARACTERS_TABLE")
+    fun getAllCharacters(): PagingSource<Int, Characters>
+
+    /**
+     * Delete all characters for pagination.
+     *
+     * @return
+     */
+    @Query("DELETE FROM CHARACTERS_TABLE")
+    suspend fun deleteAllCharacters()
 
     /**
      * Add character.
@@ -27,15 +43,7 @@ interface CharacterDao {
      * @param character - Character.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCharacter(character: CharacterEntity)
-
-    /**
-     * Get all characters with pagination.
-     *
-     * @return
-     */
-    @Query("""SELECT * FROM characters_table ORDER BY id ASC""")
-    fun getAllCharacters(): PagingSource<Int, CharacterEntity>
+    suspend fun insertCharacter(character: Characters)
 
     /**
      * Get all filtered characters with pagination. (name, status, gender, type, species).
@@ -49,7 +57,7 @@ interface CharacterDao {
      * @return
      */
     @Query(
-        """SELECT * FROM characters_table
+        """SELECT * FROM CHARACTERS_TABLE
         WHERE name LIKE '%' || :name || '%'
         AND status LIKE :status
         AND gender LIKE :gender
@@ -62,7 +70,7 @@ interface CharacterDao {
         gender: String?,
         type: String?,
         species: String?,
-    ): PagingSource<Int, CharacterEntity>
+    ): Flow<List<Characters>>
 
     /**
      * Get all characters by ids without pagination.
@@ -72,19 +80,19 @@ interface CharacterDao {
      * @return
      */
     @Query(
-        """SELECT * FROM characters_table
+        """SELECT * FROM CHARACTERS_TABLE
         WHERE id IN (:ids)
         ORDER BY id ASC"""
     )
-    fun getCharactersByIds(ids: List<Int>): Flow<List<CharacterEntity>>
+    fun getCharactersByIds(ids: List<Int>): Flow<List<Characters>>
 
     /**
      * Get character by id
      *
      * @param id - Character id.
      */
-    @Query("SELECT * FROM characters_table WHERE id = :id")
-    suspend fun getCharacterById(id: Int): CharacterEntity?
+    @Query("SELECT * FROM CHARACTERS_TABLE WHERE id = :id")
+    suspend fun getCharacterById(id: Int): Characters?
 
     /**
      * Get all types from db.
@@ -92,7 +100,7 @@ interface CharacterDao {
      * @return Flow with Character's types.
      */
     @Query(
-        """SELECT type FROM characters_table"""
+        """SELECT type FROM CHARACTERS_TABLE ORDER BY type ASC"""
     )
     fun getTypes(): Flow<List<String>>
 
@@ -102,13 +110,7 @@ interface CharacterDao {
      * @return Flow with Character's species.
      */
     @Query(
-        """SELECT species FROM characters_table"""
+        """SELECT species FROM CHARACTERS_TABLE ORDER BY species ASC"""
     )
     fun getSpecies(): Flow<List<String>>
-
-    /**
-     * Delete all characters from table (for mediator).
-     */
-    @Query("DELETE FROM characters_table")
-   fun clearAllCharacters()
 }

@@ -1,6 +1,7 @@
 package com.example.rickandmorty.data.remote.api.locations
 
-import com.example.rickandmorty.data.remote.dto.locationDto.LocationDto
+import com.example.rickandmorty.data.models.PagedResponse
+import com.example.rickandmorty.data.models.location.Location
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -8,10 +9,10 @@ import retrofit2.http.Query
 
 interface LocationsApi {
 
-    @GET("location/?page={page}")
+    @GET("location/")
     suspend fun getLocationPage(
-        @Path("page") page: Int
-    ): Response<List<LocationDto>>
+        @Query("page") page: Int,
+    ): Response<PagedResponse<Location>>
 
     /**
      * Get locations by id.
@@ -21,7 +22,7 @@ interface LocationsApi {
     @GET("location/{ids}")
     suspend fun getLocationsByIds(
         @Path("ids") ids: String
-    ): Response<List<LocationDto>>
+    ): Response<List<Location>>
 
 
     /**
@@ -35,5 +36,5 @@ interface LocationsApi {
         @Query("name") name: String?,
         @Query("type") type: String?,
         @Query("dimension") dimension: String?
-    ): Response<List<LocationDto>>
+    ): Response<List<Location>>
 }

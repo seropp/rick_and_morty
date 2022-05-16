@@ -1,8 +1,5 @@
 package com.example.rickandmorty.domain.models.character
 
-import androidx.room.PrimaryKey
-
-
 data class CharacterModel(
     val id: Int,
     val name: String,
@@ -13,6 +10,5 @@ data class CharacterModel(
     val originLocation: Int?,
     val lastLocation: Int?,
     val imageUrl: String,
-    val episodeIds: List<Int>,
-    var page: Int?
+    val episodeIds: List<Int>?
 )

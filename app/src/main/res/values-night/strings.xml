@@ -39,7 +39,7 @@
     <string name="episode_s03e07">Episode: S03E07</string>
     <string name="episode_name">Episode name</string>
     <string name="last_location">Last location:</string>
-    <string name="choose_the_type_or_subspecies_n_of_the_character">Choose The type or subspecies \n of the character</string>
+    <string name="choose_the_type_or_subspecies_n_of_the_character">Choose the type of the character</string>
     <string name="choose_the_species_nof_the_character">Choose the species\nof the character.</string>
     <string name="select_series">Select series</string>
     <string name="select_type">Select type</string>

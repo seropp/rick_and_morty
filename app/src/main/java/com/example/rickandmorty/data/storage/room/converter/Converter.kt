@@ -17,4 +17,5 @@ object Converter {
         val listType = object : TypeToken<List<Int>>() {}.type
         return Gson().fromJson(json, listType)
     }
+
 }

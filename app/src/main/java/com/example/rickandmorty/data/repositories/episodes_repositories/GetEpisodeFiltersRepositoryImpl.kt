@@ -8,8 +8,6 @@ class GetEpisodeFiltersRepositoryImpl(
     private val db: RickAndMortyDatabase
 ) : GetEpisodeFiltersRepository {
 
-    override fun getListEpisodes(): Flow<List<String>?> {
-        return db.getEpisodeDao().getEpisodes()
-    }
-
+    override fun getListEpisodes(): Flow<List<String>> =
+        db.getEpisodeDao().getEpisodes()
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/splash_screen"
-    tools:context=".presentation.characters.characters_fragment.CharactersFragment">
+    tools:context=".presentation.screens.characters.characters_fragment.CharactersFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_character"
@@ -57,35 +57,87 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_filter_charter" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_characters"
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/rv_characters"-->
+    <!--        android:layout_width="@dimen/zero"-->
+    <!--        android:layout_height="@dimen/zero"-->
+    <!--        android:layout_marginStart="@dimen/distance_horizontal"-->
+    <!--        android:layout_marginTop="@dimen/distance_vertical"-->
+    <!--        android:layout_marginEnd="@dimen/distance_horizontal"-->
+    <!--        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/characters_label"-->
+    <!--        app:layout_constraintVertical_bias="0.0"-->
+    <!--        app:spanCount="2"-->
+    <!--        tools:listitem="@layout/item_characters"-->
+    <!--        tools:orientation="vertical" />-->
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_characters"
         android:layout_width="@dimen/zero"
         android:layout_height="@dimen/zero"
-        android:layout_marginStart="@dimen/distance_horizontal"
-        android:layout_marginTop="@dimen/distance_vertical"
-        android:layout_marginEnd="@dimen/distance_horizontal"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/characters_label"
-        app:layout_constraintVertical_bias="0.0"
-        app:spanCount="2"
-        tools:listitem="@layout/item_characters"
-        tools:orientation="vertical" />
+        app:layout_constraintTop_toBottomOf="@+id/characters_label">
 
-    <ProgressBar
-        android:id="@+id/progressBar_characters"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:foregroundGravity="center"
-        android:indeterminateTint="@color/yellow"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rv_characters" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_characters"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_marginStart="@dimen/distance_horizontal"
+            android:layout_marginTop="@dimen/distance_vertical"
+            android:layout_marginEnd="@dimen/distance_horizontal"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/characters_label"
+            app:layout_constraintVertical_bias="0.0"
+            app:spanCount="2"
+            tools:listitem="@layout/item_characters"
+            tools:orientation="vertical" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+<!--    <ProgressBar-->
+<!--        android:id="@+id/progressBar_characters"-->
+<!--        style="?android:attr/progressBarStyleLarge"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:foregroundGravity="center"-->
+<!--        android:indeterminateTint="@color/yellow"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/rv_characters" />-->
+
+<!--    <com.google.android.material.textview.MaterialTextView-->
+<!--        android:id="@+id/error_msg"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:gravity="center"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        tools:text="No Internet Connection" />-->
+
+<!--    <androidx.core.widget.ContentLoadingProgressBar-->
+<!--        android:id="@+id/progress_bar"-->
+<!--        style="?android:attr/progressBarStyle"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/rv_characters"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+
+<!--        app:layout_constraintTop_toBottomOf="@+id/error_msg" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

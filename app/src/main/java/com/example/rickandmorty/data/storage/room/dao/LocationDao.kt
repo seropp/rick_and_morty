@@ -1,12 +1,10 @@
 package com.example.rickandmorty.data.storage.room.dao
 
-import androidx.paging.DataSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.example.rickandmorty.data.storage.room.entities.location.LocationEntity
+import androidx.paging.PagingSource
+import androidx.room.*
+import com.example.rickandmorty.data.models.location.Location
 import kotlinx.coroutines.flow.Flow
+
 
 @Dao
 interface LocationDao {
@@ -19,7 +17,23 @@ interface LocationDao {
      * @param locations - Locations List.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllLocations(locations: List<LocationEntity?>?)
+    fun insertAllLocations(locations: List<Location?>?)
+
+    /**
+     * Get all locations with pagination.
+     *
+     * @return
+     */
+    @Query("""SELECT * FROM LOCATIONS_TABLE ORDER BY id ASC""")
+    fun getAllLocations(): PagingSource<Int, Location>
+
+    /**
+     * Delete all locations for pagination.
+     *
+     * @return
+     */
+    @Query("DELETE FROM LOCATIONS_TABLE")
+    suspend fun deleteAllLocations()
 
     /**
      * Add location.
@@ -29,15 +43,7 @@ interface LocationDao {
      * @param location - Location.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertLocation(location: LocationEntity)
-
-    /**
-     * Get all locations with pagination.
-     *
-     * @return
-     */
-    @Query("""SELECT * FROM locations_table ORDER BY id ASC""")
-    fun getAllLocations(): DataSource.Factory<Int, LocationEntity>
+    suspend fun insertLocation(location: Location)
 
     /**
      * Get all filtered locations with pagination. (name, status, gender, type, species).
@@ -49,24 +55,24 @@ interface LocationDao {
      * @return
      */
     @Query(
-        """SELECT * FROM locations_table
+        """SELECT * FROM LOCATIONS_TABLE
         WHERE name LIKE '%' || :name || '%'
         AND type LIKE :type
         AND dimension LIKE :dimension"""
     )
-    fun getFilteredCharacters(
+    fun getFilteredLocations(
         name: String?,
         type: String?,
         dimension: String?,
-    ): Flow<List<LocationEntity>>
+    ): Flow<List<Location>>
 
     /**
      * Get location by id
      *
      * @param id - Location id.
      */
-    @Query("SELECT * FROM locations_table WHERE id = :id")
-    fun getLocationById(id: Int): LocationEntity?
+    @Query("SELECT * FROM LOCATIONS_TABLE WHERE id = :id")
+    fun getLocationById(id: Int): Location?
 
     /**
      * Get all types from db.
@@ -74,7 +80,7 @@ interface LocationDao {
      * @return Flow with Location's types.
      */
     @Query(
-        """SELECT type FROM locations_table"""
+        """SELECT type FROM LOCATIONS_TABLE ORDER BY type ASC"""
     )
     fun getTypes(): Flow<List<String>>
 
@@ -84,13 +90,7 @@ interface LocationDao {
      * @return Flow with Location's dimensions.
      */
     @Query(
-        """SELECT dimension FROM locations_table"""
+        """SELECT dimension FROM LOCATIONS_TABLE ORDER BY dimension ASC"""
     )
     fun getDimensions(): Flow<List<String>>
-
-    /**
-     * Delete all locations from table (for mediator).
-     */
-    @Query("DELETE FROM locations_table")
-    fun clearAllLocations()
 }
