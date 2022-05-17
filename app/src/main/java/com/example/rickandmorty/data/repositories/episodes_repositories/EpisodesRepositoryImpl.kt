@@ -57,8 +57,6 @@ class EpisodesRepositoryImpl(
 
     override suspend fun getAllEpisodesByIds(ids: List<Int>): List<EpisodeModel> =
         withContext(Dispatchers.IO) {
-            Log.e("))))))))))))))))", "${ids.size}")
-            Log.e("))))))))))))))))", "${ids[0]}")
             try {
                 if(ids.size>1){
                     val idsString: String = ids.joinToString(separator = ",")
@@ -77,7 +75,6 @@ class EpisodesRepositoryImpl(
                             ?.let { db.getEpisodeDao().insertEpisode(episode = it) }
                     }
                 }
-
 
             } catch (e: HttpException) {
                 Log.e("Log", "${e.code()}")

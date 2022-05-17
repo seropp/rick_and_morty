@@ -24,10 +24,10 @@ interface CharactersApi {
      * @param ids - String with ids. (For ex.: "1,2,3")
      * @return - Response from the server.
      */
-    @GET("character/{ids }")
+    @GET("character/{ids}")
     suspend fun getCharactersByIds(
         @Path("ids") ids: String
-    ): Response<PagedResponse<Characters>>
+    ): Response<List<Characters>>
 
     /**
      * Get character by filters.

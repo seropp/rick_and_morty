@@ -11,8 +11,7 @@ import com.example.rickandmorty.databinding.ItemEpisodesInCharactersBinding
 import com.example.rickandmorty.presentation.models.character.CharacterPresentation
 import com.example.rickandmorty.presentation.models.episode.EpisodePresentation
 
-
-class CharacterDetailsViewHolder(
+class EpisodeListForDetailsViewHolder(
     itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
 
@@ -20,7 +19,7 @@ class CharacterDetailsViewHolder(
 
     @SuppressLint("SetTextI18n")
     fun bind(item: EpisodePresentation) = with(binding) {
-        episodeNameInItem.text = item.episode+" "+item.name
+        episodeNameInItem.text = item.episode + " | " + item.name
         dataSapience.text = item.air_date
     }
 }

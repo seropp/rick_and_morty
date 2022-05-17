@@ -7,5 +7,5 @@ data class LocationPresentation(
     val name: String,
     val type: String,
     val dimension: String,
-    val residentsIds: List<Int>?
+    val residentsIds: List<Int>
 )

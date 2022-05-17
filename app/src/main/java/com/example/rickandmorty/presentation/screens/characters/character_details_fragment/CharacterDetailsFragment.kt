@@ -1,21 +1,18 @@
 package com.example.rickandmorty.presentation.screens.characters.character_details_fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.*
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentCharacterDetailsBinding
-import com.example.rickandmorty.presentation.adapters.character_details_adapter.CharacterDetailsAdapter
-import com.example.rickandmorty.presentation.adapters.characters_adapter.CharactersAdapter
+import com.example.rickandmorty.presentation.adapters.character_details_adapter.EpisodeListForDetailsAdapter
 import com.example.rickandmorty.presentation.models.character.CharacterPresentation
 import com.example.rickandmorty.presentation.navigator
 import kotlinx.coroutines.launch
@@ -26,7 +23,7 @@ class CharacterDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentCharacterDetailsBinding
     private lateinit var vm: CharacterDetailsViewModel
-    private var characterDetailsAdapter: CharacterDetailsAdapter? = null
+    private var episodeListForDetailsAdapter: EpisodeListForDetailsAdapter? = null
 
     private var characterId by Delegates.notNull<Int>()
     private var lastLocationId: Int? = null
@@ -96,20 +93,19 @@ class CharacterDetailsFragment : Fragment() {
     }
 
     private fun initView() {
-        characterDetailsAdapter = CharacterDetailsAdapter()
+        episodeListForDetailsAdapter = EpisodeListForDetailsAdapter()
 
         with(binding.rvCharacterDetail) {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = characterDetailsAdapter
+            adapter = episodeListForDetailsAdapter
         }
-        characterDetailsAdapter!!.onEpisodeItem = {navigator().openEpisodesDetailFragment(it.id)}
+        episodeListForDetailsAdapter!!.onEpisodeItem = {navigator().openEpisodesDetailFragment(it.id)}
     }
 
     private fun observeVm() {
         lifecycle.coroutineScope.launch {
             vm.episodesList.observe(viewLifecycleOwner, Observer {
-                Log.e("Logeeee", "$it")
-                characterDetailsAdapter!!.submitList(it)
+                episodeListForDetailsAdapter!!.submitList(it)
             })
         }
 

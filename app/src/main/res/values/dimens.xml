@@ -25,5 +25,6 @@
     <dimen name="episode_in_character_details">10sp</dimen>
     <dimen name="episode_data_character_details">8sp</dimen>
     <dimen name="linear_episode_detail_charac">340dp</dimen>
+    <dimen name="big_name">25sp</dimen>
 
 </resources>

@@ -5,12 +5,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentEpisodeDetailsBinding
+import com.example.rickandmorty.presentation.adapters.characters_adapter_for_details.CharactersListForDetailsAdapter
+import com.example.rickandmorty.presentation.models.episode.EpisodePresentation
 import com.example.rickandmorty.presentation.navigator
+import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 
 class EpisodeDetailsFragment : Fragment() {
+
+    private lateinit var binding: FragmentEpisodeDetailsBinding
+    private lateinit var vm: EpisodeDetailsViewModel
+    private var charactersListForDetailsAdapter: CharactersListForDetailsAdapter? = null
 
     private var episodeId by Delegates.notNull<Int>()
 
@@ -28,8 +40,6 @@ class EpisodeDetailsFragment : Fragment() {
             }
     }
 
-    private lateinit var binding: FragmentEpisodeDetailsBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
@@ -45,11 +55,46 @@ class EpisodeDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        vm = ViewModelProvider(
+            this,
+            EpisodeDetailsViewModelProvider(requireContext())
+        )[EpisodeDetailsViewModel::class.java]
+        vm.getEpisode(episodeId)
+        initView()
+        observeVm()
     }
 
-    private fun openCharacterDetails(characterId: Int) {
-        navigator().openCharacterDetailFragment(characterId = characterId)
+    private fun initView() {
+        charactersListForDetailsAdapter = CharactersListForDetailsAdapter()
+
+        with(binding.rvEpisodeDetail) {
+            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            adapter = charactersListForDetailsAdapter
+        }
+        charactersListForDetailsAdapter!!.onCharacterItem =
+            { navigator().openCharacterDetailFragment(it.id) }
+    }
+
+    private fun observeVm() {
+        lifecycle.coroutineScope.launch {
+            vm.episodesList.observe(viewLifecycleOwner, Observer {
+                charactersListForDetailsAdapter!!.submitList(it)
+            })
+        }
+
+        lifecycle.coroutineScope.launch {
+            vm.episodeDetails.observe(viewLifecycleOwner, Observer {
+                vm.getEpisodesList(it.residentsIds)
+                initUI(it)
+            })
+        }
+    }
+
+    private fun initUI(presentationDetails: EpisodePresentation) {
+        binding.episodeAirDateDetail.text = presentationDetails.air_date
+        binding.episodeNameDetail.text = presentationDetails.name
+        binding.episodeNumberDetail.text = "Series ${presentationDetails.episode}"
     }
 
     private fun init() {

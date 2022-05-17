@@ -15,7 +15,15 @@ class CharactersViewModelProvider(
 ) : ViewModelProvider.Factory {
 
     private val retrofitInstance by lazy {
-        RetrofitInstance.charactersApi
+        RetrofitInstance
+    }
+
+    private val characterDetailsApi by lazy {
+        retrofitInstance.characterDetailsApi
+    }
+
+    private val charactersApi by lazy {
+        retrofitInstance.charactersApi
     }
 
     private val db by lazy {
@@ -23,7 +31,11 @@ class CharactersViewModelProvider(
     }
 
     private val charactersRepository by lazy {
-        CharactersRepositoryImpl(db = db, charactersApi = retrofitInstance)
+        CharactersRepositoryImpl(
+            db = db,
+            charactersApi = charactersApi,
+            characterDetailsApi = characterDetailsApi
+        )
     }
 
     private val getAllCharactersUseCase by lazy {

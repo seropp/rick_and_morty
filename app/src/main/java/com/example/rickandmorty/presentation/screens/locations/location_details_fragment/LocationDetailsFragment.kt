@@ -5,12 +5,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentLocationDetailsBinding
+import com.example.rickandmorty.presentation.adapters.characters_adapter_for_details.CharactersListForDetailsAdapter
+import com.example.rickandmorty.presentation.models.location.LocationPresentation
 import com.example.rickandmorty.presentation.navigator
+import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 
 class LocationDetailsFragment : Fragment() {
+
+    private lateinit var binding: FragmentLocationDetailsBinding
+    private lateinit var vm: LocationDetailsViewModel
+    private var charactersListForDetailsAdapter: CharactersListForDetailsAdapter? = null
 
     private var locationId by Delegates.notNull<Int>()
 
@@ -28,8 +40,6 @@ class LocationDetailsFragment : Fragment() {
             }
     }
 
-    private lateinit var binding: FragmentLocationDetailsBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
@@ -45,11 +55,46 @@ class LocationDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        vm = ViewModelProvider(
+            this,
+            LocationDetailsViewModelProvider(requireContext())
+        )[LocationDetailsViewModel::class.java]
+        vm.getLocation(locationId)
+        initView()
+        observeVm()
     }
 
-    private fun openCharacterDetails(characterId: Int) {
-        navigator().openCharacterDetailFragment(characterId = characterId)
+    private fun initView() {
+        charactersListForDetailsAdapter = CharactersListForDetailsAdapter()
+
+        with(binding.rvLocationDetail) {
+            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            adapter = charactersListForDetailsAdapter
+        }
+        charactersListForDetailsAdapter!!.onCharacterItem =
+            { navigator().openCharacterDetailFragment(it.id) }
+    }
+
+    private fun observeVm() {
+        lifecycle.coroutineScope.launch {
+            vm.episodesList.observe(viewLifecycleOwner, Observer {
+                charactersListForDetailsAdapter!!.submitList(it)
+            })
+        }
+
+        lifecycle.coroutineScope.launch {
+            vm.locationDetails.observe(viewLifecycleOwner, Observer {
+                vm.getEpisodesList(it.residentsIds)
+                initUI(it)
+            })
+        }
+    }
+
+    private fun initUI(locationDetails: LocationPresentation) {
+        binding.locationNameDetail.text = locationDetails.name
+        binding.locationTypeDetail.text = "Type: ${locationDetails.type}"
+        binding.locationDimensionsLocation.text = "Dimension: ${locationDetails.dimension}"
     }
 
     private fun init() {

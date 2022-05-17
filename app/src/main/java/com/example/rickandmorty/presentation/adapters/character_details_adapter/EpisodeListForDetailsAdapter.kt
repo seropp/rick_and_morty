@@ -5,20 +5,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.rickandmorty.R
+import com.example.rickandmorty.presentation.adapters.characters_adapter_for_details.CharactersListForDetailsViewHolder
 import com.example.rickandmorty.presentation.models.episode.EpisodePresentation
 
-class CharacterDetailsAdapter(
-) : ListAdapter<EpisodePresentation, CharacterDetailsViewHolder>(CharacterDetailsDiffCallback()) {
+class EpisodeListForDetailsAdapter(
+) : ListAdapter<EpisodePresentation, EpisodeListForDetailsViewHolder>(CharacterDetailsDiffCallback()) {
 
     var onEpisodeItem: ((EpisodePresentation) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        CharacterDetailsViewHolder(
+        EpisodeListForDetailsViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_episodes_in_characters, parent, false)
         )
 
-    override fun onBindViewHolder(holderContacts: CharacterDetailsViewHolder, position: Int) {
+    override fun onBindViewHolder(holderContacts: EpisodeListForDetailsViewHolder, position: Int) {
         getItem(position)?.let { holderContacts.bind(it) }
         holderContacts.itemView.setOnClickListener {
             onEpisodeItem?.invoke(getItem(position)!!)
