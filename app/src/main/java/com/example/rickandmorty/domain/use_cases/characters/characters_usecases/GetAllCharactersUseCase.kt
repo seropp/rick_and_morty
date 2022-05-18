@@ -1,7 +1,5 @@
 package com.example.rickandmorty.domain.use_cases.characters.characters_usecases
 
-import android.util.Log
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import com.example.rickandmorty.domain.models.character.CharacterModel
 import com.example.rickandmorty.domain.repositories.characters_repositories.CharactersRepository
@@ -11,8 +9,19 @@ class GetAllCharactersUseCase(
     private val charactersRepository: CharactersRepository
 ) {
 
-    @ExperimentalPagingApi
-    fun execute(): Flow<PagingData<CharacterModel>> {
-        return charactersRepository.getAllCharacters()
+    fun execute(
+        name: String?,
+        status: String?,
+        gender: String?,
+        type: String?,
+        species: String?
+    ): Flow<PagingData<CharacterModel>> {
+        return charactersRepository.getAllCharacters(
+            name = name,
+            status = status,
+            gender = gender,
+            type = type,
+            species = species
+        )
     }
 }

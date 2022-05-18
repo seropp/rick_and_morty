@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentLocationsBinding
 import com.example.rickandmorty.presentation.adapters.characters_adapter.CharactersAdapter
+import com.example.rickandmorty.presentation.adapters.episodes_adapter.EpisodesAdapter
 import com.example.rickandmorty.presentation.adapters.locations_adapter.LocationsAdapter
 import com.example.rickandmorty.presentation.navigator
 import com.example.rickandmorty.presentation.screens.characters.characters_fragment.CharactersViewModel
@@ -31,9 +35,13 @@ import kotlinx.coroutines.launch
 class LocationsFragment : Fragment() {
 
     private lateinit var binding: FragmentLocationsBinding
-    private var locationsAdapter: LocationsAdapter? = null
-    private var dimension: String? = null
-    private var type: String? = null
+    private var locationsAdapter: LocationsAdapter = LocationsAdapter()
+
+    private var params: MutableMap<String, String?> = mutableMapOf(
+        "name" to null,
+        "dimension" to null,
+        "type" to null
+    )
 
     private lateinit var vm: LocationsViewModel
 
@@ -74,55 +82,84 @@ class LocationsFragment : Fragment() {
             this,
             LocationsViewModelProvider(requireContext())
         )[LocationsViewModel::class.java]
-        initView()
+
+        initRecyclerView()
         collectUiState()
 
-        binding.swipeRefreshLocations.setOnRefreshListener {
-            locationsAdapter?.refresh()
-        }
+        if (
+            params["name"] != null ||
+            params["type"] != null ||
+            params["dimension"] != null
+        ) vm.filteredTrigger.value = params
+
+        setUpSwipeToRefresh()
 
         binding.btnFilterLocations.setOnClickListener {
             navigator().openLocationsFilterFragment()
         }
 
-        binding.locationsLabel.setOnClickListener {
-            Toast.makeText(requireContext(), "$type, $dimension", Toast.LENGTH_SHORT).show()
+        binding.searchLocations.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
 
+            override fun onQueryTextChange(newText: String): Boolean {
+                performSearchEvent(query = newText)
+                return false
+            }
+
+        })
+        observeVM()
+    }
+
+    private fun observeVM() {
+
+        lifecycle.coroutineScope.launch {
+            vm.filteredTrigger.observe(viewLifecycleOwner, Observer {
+                vm.getLocationsByParams(
+                    name = vm.filteredTrigger.value?.getValue("name"),
+                    type = vm.filteredTrigger.value?.getValue("type"),
+                    dimension = vm.filteredTrigger.value?.getValue("dimension"),
+                )
+            })
         }
     }
 
-    private fun initView() {
-        locationsAdapter = LocationsAdapter()
-
+    private fun initRecyclerView() {
         with(binding.rvLocations) {
             layoutManager = LinearLayoutManager(requireContext())
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = locationsAdapter
         }
-        locationsAdapter!!.onLocationItem = {navigator().openLocationsDetailFragment(it.id)}
+
+        locationsAdapter.onLocationItem = { navigator().openLocationsDetailFragment(it.id) }
+    }
+
+    private fun performSearchEvent(query: String) {
+//        vm.getEpisodes(name = query, episode = episode)
+    }
+
+    private fun setUpSwipeToRefresh() {
+        binding.swipeRefreshLocations.apply {
+            setOnRefreshListener {
+                vm.getLocationsByParams(null, null, null)
+                binding.swipeRefreshLocations.isRefreshing = false
+                binding.rvLocations.scrollToPosition(0)
+            }
+        }
     }
 
     private fun collectUiState() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            vm.locationsFlow.collect { locationsAdapter?.submitData(it) }
-        }
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            locationsAdapter?.loadStateFlow?.collectLatest {
-                binding.swipeRefreshLocations.isRefreshing = it.refresh is LoadState.Loading
-            }
-        }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            locationsAdapter?.loadStateFlow?.distinctUntilChangedBy { it.refresh }
-                ?.filter { it.refresh is LoadState.NotLoading }
-                ?.collect { binding.rvLocations.scrollToPosition(0) }
+        viewLifecycleOwner.lifecycleScope.launch {
+            vm.locationsFlow.collectLatest { locationsAdapter?.submitData(it) }
         }
     }
 
     private fun init() {
         arguments?.let {
-            type = it.getString(KEY_TYPE)
-            dimension = it.getString(KEY_DIMENSION)
+            params["type"] = it.getString(KEY_TYPE)
+            params["dimension"] = it.getString(KEY_DIMENSION)
         }
     }
 }

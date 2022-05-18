@@ -9,7 +9,15 @@ class GetAllLocationsUseCase(
     private val locationsRepository: LocationsRepository
 ) {
 
-    fun execute(): Flow<PagingData<LocationModel>> {
-        return locationsRepository.getAllLocations()
+    fun execute(
+        name: String?,
+        type: String?,
+        dimension: String?
+    ): Flow<PagingData<LocationModel>> {
+        return locationsRepository.getAllLocations(
+            name = name,
+            type = type,
+            dimension = dimension
+        )
     }
 }

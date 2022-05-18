@@ -3,21 +3,23 @@ package com.example.rickandmorty.data.remote.api.episodes
 import com.example.rickandmorty.data.models.PagedResponse
 import com.example.rickandmorty.data.models.episodes.Episode
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface EpisodesApi {
 
     /**
      * Get episode page.
-     * @param page - Episode page.
+     * @param page - Episodes page.
+     * @param name - name of episodes.
+     * @param episode - Episode.
      * @return - Response from the server.
      */
     @GET("episode/")
-    suspend fun getEpisodePage(
-        @Query("page") page: Int
-    ): Response<PagedResponse<Episode>>
+    suspend fun getEpisodes(
+        @Query("page") page: Int,
+        @Query("name") name: String?,
+        @Query("episode") episode: String?
+    ): PagedResponse<Episode>
 
     /**
      * Get episodes by ids.
@@ -27,16 +29,5 @@ interface EpisodesApi {
     @GET("episode/{ids}")
     suspend fun getEpisodesByIds(
         @Path("ids") ids: String
-    ): Response<List<Episode>>
-
-    /**
-     * Get episodes by filters.
-     * @param episode - Episode.
-     * @return  -  Response from the server.
-     */
-    @GET("episode/")
-    suspend fun getEpisodesWithFilters(
-        @Query("name") name: String?,
-        @Query("episode") episode: String?
     ): Response<List<Episode>>
 }

@@ -19,13 +19,7 @@ interface EpisodeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllEpisodes(episodes: List<Episode?>?)
 
-    /**
-     * Get all episodes with pagination.
-     *
-     * @return
-     */
-    @Query("SELECT * FROM EPISODES_TABLE")
-    fun getAllEpisodes(): PagingSource<Int, Episode>
+
 
     /**
      * Delete all episodes for pagination.
@@ -55,13 +49,13 @@ interface EpisodeDao {
      */
     @Query(
         """SELECT * FROM EPISODES_TABLE
-        WHERE name LIKE '%' || :name || '%'
-        AND episode LIKE :episode"""
+        WHERE (:name IS NULL OR name LIKE '%' || :name || '%')
+        AND (:episode IS NULL OR episode LIKE :episode)"""
     )
     fun getFilteredEpisodes(
         name: String?,
         episode: String?,
-    ): Flow<List<Episode>>
+    ): PagingSource<Int, Episode>
 
     /**
      * Get all episodes by ids without pagination.

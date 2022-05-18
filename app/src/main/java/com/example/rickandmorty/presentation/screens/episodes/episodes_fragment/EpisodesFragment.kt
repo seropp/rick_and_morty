@@ -1,15 +1,11 @@
 package com.example.rickandmorty.presentation.screens.episodes.episodes_fragment
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.*
 import androidx.paging.ExperimentalPagingApi
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentEpisodesBinding
@@ -18,8 +14,6 @@ import com.example.rickandmorty.presentation.navigator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 
@@ -29,7 +23,8 @@ import kotlinx.coroutines.launch
 class EpisodesFragment : Fragment() {
 
     private lateinit var binding: FragmentEpisodesBinding
-    private var episodesAdapter: EpisodesAdapter? = null
+    private var episodesAdapter: EpisodesAdapter = EpisodesAdapter()
+
     private var episode: String? = null
 
     private lateinit var vm: EpisodesViewModel
@@ -68,48 +63,72 @@ class EpisodesFragment : Fragment() {
             this,
             EpisodesViewModelProvider(requireContext())
         )[EpisodesViewModel::class.java]
-        initView()
+
+        initRecyclerView()
         collectUiState()
 
-//        binding.swipeRefreshLocations.setOnRefreshListener {
-//            episodesAdapter?.refresh()
-//        }
+        if (episode != null) vm.filteredTrigger.value["episode"] = episode
+
+        setUpSwipeToRefresh()
 
         binding.btnFilterEpisodes.setOnClickListener {
             navigator().openEpisodesFilterFragment()
         }
 
-        binding.episodesLabel.setOnClickListener {
-            Toast.makeText(requireContext(), "$episode", Toast.LENGTH_SHORT).show()
+        binding.searchEpisodes.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                performSearchEvent(query = newText)
+                return false
+            }
+
+        })
+        observeVM()
+    }
+
+    private fun observeVM() {
+
+        lifecycle.coroutineScope.launch {
+            vm.filteredTrigger.collect {
+                vm.getEpisodeByParams(
+                    name = vm.filteredTrigger.value.getValue("name"),
+                    episode = vm.filteredTrigger.value.getValue("episode"),
+                )
+            }
         }
 
     }
 
-    private fun initView() {
-        episodesAdapter = EpisodesAdapter()
+    private fun performSearchEvent(query: String) {
+//        vm.getEpisodes(name = query, episode = episode)
+    }
 
+    private fun initRecyclerView() {
         with(binding.rvEpisodes) {
             layoutManager = LinearLayoutManager(requireContext())
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = episodesAdapter
         }
-        episodesAdapter!!.onEpisodeItem = {navigator().openEpisodesDetailFragment(it.id)}
+        episodesAdapter.onEpisodeItem = { navigator().openEpisodesDetailFragment(it.id) }
+    }
+
+    private fun setUpSwipeToRefresh() {
+        binding.swipeRefreshEpisodes.apply {
+            setOnRefreshListener {
+                vm.getEpisodeByParams(null, null)
+                binding.swipeRefreshEpisodes.isRefreshing = false
+                binding.rvEpisodes.scrollToPosition(0)
+            }
+        }
     }
 
     private fun collectUiState() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            vm.episodesFlow.collect { episodesAdapter?.submitData(it) }
-        }
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            episodesAdapter?.loadStateFlow?.collectLatest {
-                binding.swipeRefreshLocations.isRefreshing = it.refresh is LoadState.Loading
-            }
-        }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            episodesAdapter?.loadStateFlow?.distinctUntilChangedBy { it.refresh }
-                ?.filter { it.refresh is LoadState.NotLoading }
-                ?.collect { binding.rvEpisodes.scrollToPosition(0) }
+        viewLifecycleOwner.lifecycleScope.launch {
+            vm.episodesFlow.collectLatest  { episodesAdapter.submitData(it) }
         }
     }
 

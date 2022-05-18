@@ -3,6 +3,7 @@ package com.example.rickandmorty.presentation.screens.locations.location_details
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.ExperimentalPagingApi
 import com.example.rickandmorty.data.remote.api.RetrofitInstance
 import com.example.rickandmorty.data.repositories.characters_repositories.CharacterDetailsRepositoryImpl
 import com.example.rickandmorty.data.repositories.characters_repositories.CharactersRepositoryImpl
@@ -17,7 +18,7 @@ import com.example.rickandmorty.domain.use_cases.episodes.episodes_usecases.GetA
 import com.example.rickandmorty.domain.use_cases.locations.location_details_use_cases.GetLocationByIdUseCase
 import com.example.rickandmorty.presentation.screens.characters.character_details_fragment.CharacterDetailsViewModel
 
-
+@ExperimentalPagingApi
 class LocationDetailsViewModelProvider(
     context: Context
 ) : ViewModelProvider.Factory {

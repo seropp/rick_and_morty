@@ -6,12 +6,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface EpisodesRepository {
 
-    fun getAllEpisodes(): Flow<PagingData<EpisodeModel>>
-
-    suspend fun getAllEpisodesByFilters(
+    fun getAllEpisodes(
         name: String?,
         episode: String?
-    ): List<EpisodeModel>
+    ): Flow<PagingData<EpisodeModel>>
 
     suspend fun getAllEpisodesByIds(ids: List<Int>): List<EpisodeModel>
 }

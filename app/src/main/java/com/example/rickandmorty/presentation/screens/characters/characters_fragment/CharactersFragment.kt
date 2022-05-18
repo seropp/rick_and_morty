@@ -1,13 +1,14 @@
 package com.example.rickandmorty.presentation.screens.characters.characters_fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
@@ -15,7 +16,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentCharactersBinding
 import com.example.rickandmorty.presentation.adapters.characters_adapter.CharactersAdapter
+import com.example.rickandmorty.presentation.adapters.characters_adapter_for_details.CharactersListForDetailsAdapter
 import com.example.rickandmorty.presentation.navigator
+import kotlinx.android.synthetic.main.fragment_characters.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
@@ -30,11 +33,15 @@ import kotlinx.coroutines.launch
 class CharactersFragment : Fragment() {
 
     private lateinit var binding: FragmentCharactersBinding
-    private var charactersAdapter: CharactersAdapter? = null
-    private var gender: String? = null
-    private var status: String? = null
-    private var species: String? = null
-    private var type: String? = null
+    private var charactersAdapter: CharactersAdapter = CharactersAdapter()
+
+    private var params: MutableMap<String, String?> = mutableMapOf(
+        "name" to null,
+        "gender" to null,
+        "status" to null,
+        "species" to null,
+        "type" to null
+    )
 
     private lateinit var vm: CharactersViewModel
 
@@ -81,57 +88,88 @@ class CharactersFragment : Fragment() {
             this,
             CharactersViewModelProvider(requireContext())
         )[CharactersViewModel::class.java]
-        initView()
+
+        initRecyclerView()
         collectUiState()
 
-//        binding.swipeRefreshCharacters.setOnRefreshListener {
-//            charactersAdapter?.refresh()
-//        }
+        if(
+            params["gender"] != null ||
+            params["status"] != null ||
+            params["type"] != null ||
+            params["species"] != null
+        )vm.filteredTrigger.value = params
 
-        binding.resetCharacters.setOnClickListener{
-            charactersAdapter?.refresh()
-        }
+        setUpSwipeToRefresh()
 
         binding.btnFilterCharter.setOnClickListener {
             navigator().openCharactersFilterFragment()
         }
 
+        binding.searchCharacter.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                performSearchEvent(query = newText)
+                return false
+            }
+
+        })
+        observeVM()
     }
 
-    private fun initView() {
-        charactersAdapter = CharactersAdapter()
+    private fun observeVM() {
 
+        lifecycle.coroutineScope.launch {
+            vm.filteredTrigger.collect {
+                vm.getCharactersByParams(
+                    name = vm.filteredTrigger.value.getValue("name"),
+                    gender = vm.filteredTrigger.value.getValue("gender"),
+                    status = vm.filteredTrigger.value.getValue("status"),
+                    species = vm.filteredTrigger.value.getValue("species"),
+                    type = vm.filteredTrigger.value.getValue("type")
+                )
+            }
+        }
+    }
+
+    private fun performSearchEvent(query: String) {
+//        vm.getEpisodes(name = query, episode = episode)
+    }
+
+
+    private fun initRecyclerView() {
         with(binding.rvCharacters) {
             layoutManager = LinearLayoutManager(requireContext())
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = charactersAdapter
         }
-        charactersAdapter!!.onCharacterItem = {navigator().openCharacterDetailFragment(it.id)}
+        charactersAdapter.onCharacterItem = { navigator().openCharacterDetailFragment(it.id) }
+    }
+
+    private fun setUpSwipeToRefresh() {
+        binding.swipeRefreshCharacters.apply {
+            setOnRefreshListener {
+                vm.getCharactersByParams(null, null, null, null, null)
+                binding.swipeRefreshCharacters.isRefreshing = false
+                binding.rvCharacters.scrollToPosition(0)
+            }
+        }
     }
 
     private fun collectUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            vm.charactersFlow.collect { charactersAdapter?.submitData(it) }
-        }
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            charactersAdapter?.loadStateFlow?.collectLatest {
-                binding.swipeRefreshCharacters.isRefreshing = it.refresh is LoadState.Loading
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            charactersAdapter?.loadStateFlow?.distinctUntilChangedBy { it.refresh }
-                ?.filter { it.refresh is LoadState.NotLoading }
-                ?.collect { binding.rvCharacters.scrollToPosition(0) }
+            vm.charactersFlow.collectLatest { charactersAdapter.submitData(it) }
         }
     }
 
     private fun init() {
         arguments?.let {
-            gender = it.getString(KEY_GENDER)
-            status = it.getString(KEY_STATUS)
-            species = it.getString(KEY_SPECIES)
-            type = it.getString(KEY_TYPE)
+            params["gender"] = it.getString(KEY_GENDER)
+            params["status"] = it.getString(KEY_STATUS)
+            params["species"] = it.getString(KEY_SPECIES)
+            params["type"] = it.getString(KEY_TYPE)
         }
     }
 }

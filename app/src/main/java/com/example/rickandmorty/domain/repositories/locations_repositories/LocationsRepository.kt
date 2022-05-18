@@ -6,13 +6,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocationsRepository {
 
-    fun getAllLocations(): Flow<PagingData<LocationModel>>
-
-    suspend fun getAllLocationsByFilters(
+    fun getAllLocations(
         name: String?,
         type: String?,
         dimension: String?
-    ): List<LocationModel>
+    ): Flow<PagingData<LocationModel>>
 
     suspend fun getAllLocationsByIds(ids: List<Int>): List<LocationModel>
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
+import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentLocationDetailsBinding
@@ -17,7 +18,7 @@ import com.example.rickandmorty.presentation.navigator
 import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
-
+@ExperimentalPagingApi
 class LocationDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentLocationDetailsBinding
@@ -78,7 +79,7 @@ class LocationDetailsFragment : Fragment() {
 
     private fun observeVm() {
         lifecycle.coroutineScope.launch {
-            vm.episodesList.observe(viewLifecycleOwner, Observer {
+            vm.charactersList.observe(viewLifecycleOwner, Observer {
                 charactersListForDetailsAdapter!!.submitList(it)
             })
         }

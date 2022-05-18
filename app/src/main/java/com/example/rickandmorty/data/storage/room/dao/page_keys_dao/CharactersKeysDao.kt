@@ -10,7 +10,7 @@ import com.example.rickandmorty.data.models.page_keys.CharactersPageKeys
 interface CharactersKeysDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllCharactersKeys(remoteKeysCharacters: List<CharactersPageKeys>?)
+    suspend fun insertAllCharactersKeys(remoteKeysCharacters: List<CharactersPageKeys>)
 
     @Query("SELECT * FROM CHARACTERS_PAGE_KEYS WHERE id =:id")
     suspend fun getCharactersRemoteKeys(id: Int): CharactersPageKeys

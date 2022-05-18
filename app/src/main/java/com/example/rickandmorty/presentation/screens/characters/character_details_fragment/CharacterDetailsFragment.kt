@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.*
+import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -19,11 +20,13 @@ import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 
+@ExperimentalPagingApi
 class CharacterDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentCharacterDetailsBinding
     private lateinit var vm: CharacterDetailsViewModel
     private var episodeListForDetailsAdapter: EpisodeListForDetailsAdapter? = null
+
 
     private var characterId by Delegates.notNull<Int>()
     private var lastLocationId: Int? = null

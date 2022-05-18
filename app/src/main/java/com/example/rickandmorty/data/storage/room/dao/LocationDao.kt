@@ -20,14 +20,6 @@ interface LocationDao {
     fun insertAllLocations(locations: List<Location?>?)
 
     /**
-     * Get all locations with pagination.
-     *
-     * @return
-     */
-    @Query("""SELECT * FROM LOCATIONS_TABLE ORDER BY id ASC""")
-    fun getAllLocations(): PagingSource<Int, Location>
-
-    /**
      * Delete all locations for pagination.
      *
      * @return
@@ -56,15 +48,15 @@ interface LocationDao {
      */
     @Query(
         """SELECT * FROM LOCATIONS_TABLE
-        WHERE name LIKE '%' || :name || '%'
-        AND type LIKE :type
-        AND dimension LIKE :dimension"""
+        WHERE (:name IS NULL OR name LIKE '%' || :name || '%')
+        AND (:type IS NULL OR type LIKE :type)
+        AND (:dimension IS NULL OR dimension LIKE :dimension)"""
     )
     fun getFilteredLocations(
         name: String?,
         type: String?,
         dimension: String?,
-    ): Flow<List<Location>>
+    ):  PagingSource<Int, Location>
 
     /**
      * Get location by id

@@ -22,7 +22,7 @@ class LocationDetailsViewModel(
     val locationDetails: MutableLiveData<LocationPresentation> = _locationDetails
 
     private val _charactersList = MutableLiveData<List<CharacterPresentation>>()
-    val episodesList: MutableLiveData<List<CharacterPresentation>> = _charactersList
+    val charactersList: MutableLiveData<List<CharacterPresentation>> = _charactersList
 
     fun getLocation(id: Int) {
         viewModelScope.launch {

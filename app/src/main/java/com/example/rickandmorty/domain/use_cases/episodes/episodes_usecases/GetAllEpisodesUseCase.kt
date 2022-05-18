@@ -9,7 +9,13 @@ class GetAllEpisodesUseCase(
     private val episodesRepository: EpisodesRepository
 ) {
 
-    fun execute(): Flow<PagingData<EpisodeModel>> {
-        return episodesRepository.getAllEpisodes()
+    fun execute(
+        name: String?,
+        episode: String?
+    ): Flow<PagingData<EpisodeModel>> {
+        return episodesRepository.getAllEpisodes(
+            name = name,
+            episode = episode
+        )
     }
 }

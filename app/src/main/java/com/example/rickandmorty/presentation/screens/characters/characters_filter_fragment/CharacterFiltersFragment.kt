@@ -22,8 +22,8 @@ import kotlinx.coroutines.launch
 class CharacterFiltersFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentCharactersFilterBinding
-    private var species: String? = null
-    private var type: String? = null
+    private var species: String = ""
+    private var type: String = ""
     private var speciesList: MutableList<String> = mutableListOf<String>()
     private var typesList: MutableList<String> = mutableListOf<String>()
     private lateinit var vm: CharacterFiltersViewModel
@@ -86,20 +86,20 @@ class CharacterFiltersFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun getStatus(): String? {
+    private fun getStatus(): String {
         binding.statusFilterCharacters.children
             .toList()
             .filter { (it as Chip).isChecked }
             .forEach { return (it as Chip).text.toString() }
-        return null
+        return ""
     }
 
-    private fun getGender(): String? {
+    private fun getGender(): String {
         binding.genderFilterCharacters.children
             .toList()
             .filter { (it as Chip).isChecked }
             .forEach { return (it as Chip).text.toString() }
-        return null
+        return ""
     }
 
     private fun getSpecies(params: List<String>) {

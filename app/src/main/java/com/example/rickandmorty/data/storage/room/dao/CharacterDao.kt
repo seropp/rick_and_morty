@@ -25,7 +25,7 @@ interface CharacterDao {
      * @return
      */
     @Query("SELECT * FROM CHARACTERS_TABLE")
-    fun getAllCharacters(): PagingSource<Int, Characters>
+    fun getAllCharacters(): Flow<List <Characters>>
 
     /**
      * Delete all characters for pagination.
@@ -58,11 +58,11 @@ interface CharacterDao {
      */
     @Query(
         """SELECT * FROM CHARACTERS_TABLE
-        WHERE name LIKE '%' || :name || '%'
-        AND status LIKE :status
-        AND gender LIKE :gender
-        AND type LIKE :type
-        AND species LIKE :species"""
+        WHERE (:name IS NULL OR name LIKE '%' || :name || '%')
+        AND (:status IS NULL OR status LIKE :status)
+        AND (:gender IS NULL OR gender LIKE :gender)
+        AND (:type IS NULL OR type LIKE :type)
+        AND (:species IS NULL OR species LIKE :species)"""
     )
     fun getFilteredCharacters(
         name: String?,
@@ -70,7 +70,7 @@ interface CharacterDao {
         gender: String?,
         type: String?,
         species: String?,
-    ): Flow<List<Characters>>
+    ): PagingSource<Int, Characters>
 
     /**
      * Get all characters by ids without pagination.

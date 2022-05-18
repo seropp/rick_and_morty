@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
+import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentEpisodeDetailsBinding
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 
+@ExperimentalPagingApi
 class EpisodeDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentEpisodeDetailsBinding
@@ -78,7 +80,7 @@ class EpisodeDetailsFragment : Fragment() {
 
     private fun observeVm() {
         lifecycle.coroutineScope.launch {
-            vm.episodesList.observe(viewLifecycleOwner, Observer {
+            vm.charactersList.observe(viewLifecycleOwner, Observer {
                 charactersListForDetailsAdapter!!.submitList(it)
             })
         }

@@ -1,22 +1,17 @@
 package com.example.rickandmorty.domain.repositories.characters_repositories
-
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import com.example.rickandmorty.domain.models.character.CharacterModel
 import kotlinx.coroutines.flow.Flow
 
 interface CharactersRepository {
 
-    @ExperimentalPagingApi
-    fun getAllCharacters(): Flow<PagingData<CharacterModel>>
-
-    suspend fun getAllCharactersByFilters(
+    fun getAllCharacters(
         name: String?,
         status: String?,
         gender: String?,
         type: String?,
         species: String?
-    ): List<CharacterModel>
+    ): Flow<PagingData<CharacterModel>>
 
     suspend fun getAllCharactersByIds(ids: List<Int>): List<CharacterModel>
 

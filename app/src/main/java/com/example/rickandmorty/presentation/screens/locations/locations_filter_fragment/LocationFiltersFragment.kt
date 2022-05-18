@@ -74,6 +74,7 @@ class LocationFiltersFragment : BottomSheetDialogFragment() {
                 }
             }
         }
+        
     }
 
     private fun getType(params: List<String>) {

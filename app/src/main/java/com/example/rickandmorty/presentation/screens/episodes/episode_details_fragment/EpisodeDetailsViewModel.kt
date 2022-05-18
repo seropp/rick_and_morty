@@ -20,7 +20,7 @@ class EpisodeDetailsViewModel(
     val episodeDetails: MutableLiveData<EpisodePresentation> = _episodeDetails
 
     private val _charactersList = MutableLiveData<List<CharacterPresentation>>()
-    val episodesList: MutableLiveData<List<CharacterPresentation>> = _charactersList
+    val charactersList: MutableLiveData<List<CharacterPresentation>> = _charactersList
 
     fun getEpisode(id: Int) {
         viewModelScope.launch {

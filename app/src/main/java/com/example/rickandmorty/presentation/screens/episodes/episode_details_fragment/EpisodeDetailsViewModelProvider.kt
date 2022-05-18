@@ -3,6 +3,7 @@ package com.example.rickandmorty.presentation.screens.episodes.episode_details_f
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.ExperimentalPagingApi
 import com.example.rickandmorty.data.remote.api.RetrofitInstance
 import com.example.rickandmorty.data.repositories.characters_repositories.CharacterDetailsRepositoryImpl
 import com.example.rickandmorty.data.repositories.characters_repositories.CharactersRepositoryImpl
@@ -17,6 +18,7 @@ import com.example.rickandmorty.domain.use_cases.episodes.episodes_usecases.GetA
 import com.example.rickandmorty.presentation.screens.characters.character_details_fragment.CharacterDetailsViewModel
 
 
+@ExperimentalPagingApi
 class EpisodeDetailsViewModelProvider(
     context: Context
 ) : ViewModelProvider.Factory {
@@ -47,8 +49,8 @@ class EpisodeDetailsViewModelProvider(
 
     private val charactersRepository by lazy {
         CharactersRepositoryImpl(
-            charactersApi = charactersApi,
             characterDetailsApi = characterDetailsApi,
+            charactersApi = charactersApi,
             db = db
         )
     }
