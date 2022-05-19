@@ -7,6 +7,21 @@
     android:background="@color/splash_screen"
     tools:context=".presentation.screens.episodes.episode_details_fragment.EpisodeDetailsFragment">
 
+    <ImageButton
+        android:id="@+id/back_btn"
+
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/round_button"
+        android:gravity="center_vertical|center_horizontal"
+        android:src="@drawable/btn_back"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toTopOf="@+id/guideline1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
