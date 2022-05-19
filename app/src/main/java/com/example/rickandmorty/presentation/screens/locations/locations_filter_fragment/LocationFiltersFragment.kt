@@ -10,10 +10,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.ExperimentalPagingApi
 import com.example.rickandmorty.databinding.FragmentLocationsFilterBinding
+import com.example.rickandmorty.di.App
 import com.example.rickandmorty.presentation.navigator
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class LocationFiltersFragment : BottomSheetDialogFragment() {
@@ -24,6 +27,8 @@ class LocationFiltersFragment : BottomSheetDialogFragment() {
     private var dimension: String? = null
     private var dimensionsList: MutableList<String> = mutableListOf<String>()
     private var typesList: MutableList<String> = mutableListOf<String>()
+    @Inject
+    lateinit var locationFiltersViewModelProvider: LocationFiltersViewModelProvider
     private lateinit var vm: LocationFiltersViewModel
 
 
@@ -35,13 +40,16 @@ class LocationFiltersFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    @OptIn(ExperimentalPagingApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireContext().applicationContext as App).appComponent.inject(this)
 
         vm = ViewModelProvider(
             this,
-            LocationFiltersViewModelProvider(requireContext())
+            locationFiltersViewModelProvider
         )[LocationFiltersViewModel::class.java]
+
         observeVm()
 
         binding.btnApplyFilterLocations.setOnClickListener {

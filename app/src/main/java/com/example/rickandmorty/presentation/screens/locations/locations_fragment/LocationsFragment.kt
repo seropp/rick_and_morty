@@ -16,6 +16,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentLocationsBinding
+import com.example.rickandmorty.di.App
 import com.example.rickandmorty.presentation.adapters.characters_adapter.CharactersAdapter
 import com.example.rickandmorty.presentation.adapters.episodes_adapter.EpisodesAdapter
 import com.example.rickandmorty.presentation.adapters.locations_adapter.LocationsAdapter
@@ -28,6 +29,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @ExperimentalPagingApi
 @ExperimentalCoroutinesApi
@@ -43,6 +45,8 @@ class LocationsFragment : Fragment() {
         "type" to null
     )
 
+    @Inject
+    lateinit var locationsViewModelProvider: LocationsViewModelProvider
     private lateinit var vm: LocationsViewModel
 
     companion object {
@@ -78,9 +82,11 @@ class LocationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (requireContext().applicationContext as App).appComponent.inject(this)
+        
         vm = ViewModelProvider(
             this,
-            LocationsViewModelProvider(requireContext())
+            locationsViewModelProvider
         )[LocationsViewModel::class.java]
 
         initRecyclerView()

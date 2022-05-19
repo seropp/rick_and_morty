@@ -12,16 +12,20 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentLocationDetailsBinding
+import com.example.rickandmorty.di.App
 import com.example.rickandmorty.presentation.adapters.characters_adapter_for_details.CharactersListForDetailsAdapter
 import com.example.rickandmorty.presentation.models.location.LocationPresentation
 import com.example.rickandmorty.presentation.navigator
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.properties.Delegates
 
 @ExperimentalPagingApi
 class LocationDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentLocationDetailsBinding
+    @Inject
+    lateinit var locationDetailsViewModelProvider: LocationDetailsViewModelProvider
     private lateinit var vm: LocationDetailsViewModel
     private var charactersListForDetailsAdapter: CharactersListForDetailsAdapter? = null
 
@@ -56,10 +60,13 @@ class LocationDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireContext().applicationContext as App).appComponent.inject(this)
+
         vm = ViewModelProvider(
             this,
-            LocationDetailsViewModelProvider(requireContext())
+            locationDetailsViewModelProvider
         )[LocationDetailsViewModel::class.java]
+
         vm.getLocation(locationId)
         initView()
         observeVm()

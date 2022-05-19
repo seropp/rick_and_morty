@@ -13,10 +13,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentCharacterDetailsBinding
+import com.example.rickandmorty.di.App
 import com.example.rickandmorty.presentation.adapters.character_details_adapter.EpisodeListForDetailsAdapter
 import com.example.rickandmorty.presentation.models.character.CharacterPresentation
 import com.example.rickandmorty.presentation.navigator
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.properties.Delegates
 
 
@@ -25,6 +27,11 @@ class CharacterDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentCharacterDetailsBinding
     private lateinit var vm: CharacterDetailsViewModel
+
+    @Inject
+    lateinit var characterDetailsViewModelProvider: CharacterDetailsViewModelProvider
+
+
     private var episodeListForDetailsAdapter: EpisodeListForDetailsAdapter? = null
 
 
@@ -61,11 +68,13 @@ class CharacterDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireContext().applicationContext as App).appComponent.inject(this)
 
         vm = ViewModelProvider(
             this,
-            CharacterDetailsViewModelProvider(requireContext())
+            characterDetailsViewModelProvider
         )[CharacterDetailsViewModel::class.java]
+
         vm.getCharacter(characterId)
         initView()
         observeVm()

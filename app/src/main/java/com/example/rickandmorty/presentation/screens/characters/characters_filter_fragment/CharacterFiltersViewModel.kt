@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class CharacterFiltersViewModel(
     private val getListCharactersSpeciesUseCase: GetListCharactersSpeciesUseCase,
-    private val getListTypesSpeciesUseCase: GetListCharactersTypesUseCase,
+    private val getListCharactersTypesUseCase: GetListCharactersTypesUseCase,
 ): ViewModel() {
 
     private val _speciesList = MutableStateFlow<List<String>>(listOf())
@@ -28,7 +28,7 @@ class CharacterFiltersViewModel(
         }
 
         viewModelScope.launch {
-            getListTypesSpeciesUseCase.execute()
+            getListCharactersTypesUseCase.execute()
                 .collect { list ->
                     _typeList.value = list
                 }

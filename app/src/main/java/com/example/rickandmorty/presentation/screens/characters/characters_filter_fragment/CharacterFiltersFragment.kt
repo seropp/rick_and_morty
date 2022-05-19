@@ -12,11 +12,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.ExperimentalPagingApi
 import com.example.rickandmorty.databinding.FragmentCharactersFilterBinding
+import com.example.rickandmorty.di.App
 import com.example.rickandmorty.presentation.navigator
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class CharacterFiltersFragment : BottomSheetDialogFragment() {
@@ -26,6 +29,8 @@ class CharacterFiltersFragment : BottomSheetDialogFragment() {
     private var type: String = ""
     private var speciesList: MutableList<String> = mutableListOf<String>()
     private var typesList: MutableList<String> = mutableListOf<String>()
+    @Inject
+    lateinit var characterFiltersViewModelProvider: CharacterFiltersViewModelProvider
     private lateinit var vm: CharacterFiltersViewModel
 
     override fun onCreateView(
@@ -36,13 +41,17 @@ class CharacterFiltersFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    @OptIn(ExperimentalPagingApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireContext().applicationContext as App).appComponent.inject(this)
 
         vm = ViewModelProvider(
             this,
-            CharacterFiltersViewModelProvider(requireContext())
+            characterFiltersViewModelProvider
         )[CharacterFiltersViewModel::class.java]
+
+
         observeVm()
 
         binding.btnApplyFilterCharacters.setOnClickListener {

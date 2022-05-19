@@ -12,10 +12,12 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentEpisodeDetailsBinding
+import com.example.rickandmorty.di.App
 import com.example.rickandmorty.presentation.adapters.characters_adapter_for_details.CharactersListForDetailsAdapter
 import com.example.rickandmorty.presentation.models.episode.EpisodePresentation
 import com.example.rickandmorty.presentation.navigator
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.properties.Delegates
 
 
@@ -23,6 +25,8 @@ import kotlin.properties.Delegates
 class EpisodeDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentEpisodeDetailsBinding
+    @Inject
+    lateinit var episodeDetailsViewModelProvider: EpisodeDetailsViewModelProvider
     private lateinit var vm: EpisodeDetailsViewModel
     private var charactersListForDetailsAdapter: CharactersListForDetailsAdapter? = null
 
@@ -57,10 +61,13 @@ class EpisodeDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireContext().applicationContext as App).appComponent.inject(this)
+
         vm = ViewModelProvider(
             this,
-            EpisodeDetailsViewModelProvider(requireContext())
+            episodeDetailsViewModelProvider
         )[EpisodeDetailsViewModel::class.java]
+
         vm.getEpisode(episodeId)
         initView()
         observeVm()

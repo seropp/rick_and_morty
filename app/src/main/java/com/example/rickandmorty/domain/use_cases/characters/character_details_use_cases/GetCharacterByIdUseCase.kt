@@ -2,7 +2,6 @@ package com.example.rickandmorty.domain.use_cases.characters.character_details_u
 
 import com.example.rickandmorty.domain.models.character.CharacterModel
 import com.example.rickandmorty.domain.repositories.characters_repositories.CharacterDetailsRepository
-import kotlinx.coroutines.flow.Flow
 
 class GetCharacterByIdUseCase(
     private val characterDetailsRepository: CharacterDetailsRepository

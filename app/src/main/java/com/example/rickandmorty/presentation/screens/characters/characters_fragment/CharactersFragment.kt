@@ -15,6 +15,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentCharactersBinding
+import com.example.rickandmorty.di.App
 import com.example.rickandmorty.presentation.adapters.characters_adapter.CharactersAdapter
 import com.example.rickandmorty.presentation.adapters.characters_adapter_for_details.CharactersListForDetailsAdapter
 import com.example.rickandmorty.presentation.navigator
@@ -25,6 +26,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @ExperimentalPagingApi
@@ -42,7 +44,8 @@ class CharactersFragment : Fragment() {
         "species" to null,
         "type" to null
     )
-
+@Inject
+lateinit var charactersViewModelProvider: CharactersViewModelProvider
     private lateinit var vm: CharactersViewModel
 
     companion object {
@@ -83,10 +86,11 @@ class CharactersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireContext().applicationContext as App).appComponent.inject(this)
 
         vm = ViewModelProvider(
             this,
-            CharactersViewModelProvider(requireContext())
+            charactersViewModelProvider
         )[CharactersViewModel::class.java]
 
         initRecyclerView()

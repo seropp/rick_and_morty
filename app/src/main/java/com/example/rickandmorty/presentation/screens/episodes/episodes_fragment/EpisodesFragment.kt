@@ -9,12 +9,14 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentEpisodesBinding
+import com.example.rickandmorty.di.App
 import com.example.rickandmorty.presentation.adapters.episodes_adapter.EpisodesAdapter
 import com.example.rickandmorty.presentation.navigator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @ExperimentalPagingApi
@@ -27,6 +29,8 @@ class EpisodesFragment : Fragment() {
 
     private var episode: String? = null
 
+    @Inject
+    lateinit var episodesViewModelProvider: EpisodesViewModelProvider
     private lateinit var vm: EpisodesViewModel
 
     companion object {
@@ -58,10 +62,11 @@ class EpisodesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireContext().applicationContext as App).appComponent.inject(this)
 
         vm = ViewModelProvider(
             this,
-            EpisodesViewModelProvider(requireContext())
+            episodesViewModelProvider
         )[EpisodesViewModel::class.java]
 
         initRecyclerView()
