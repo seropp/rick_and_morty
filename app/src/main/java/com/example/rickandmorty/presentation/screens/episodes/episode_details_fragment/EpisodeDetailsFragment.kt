@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.observe
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -71,7 +73,13 @@ class EpisodeDetailsFragment : Fragment() {
         vm.getEpisode(episodeId)
         initView()
         observeVm()
+        showProgressBar()
+
+        binding.backBtn.setOnClickListener{
+            navigator().backButton()
+        }
     }
+
 
     private fun initView() {
         charactersListForDetailsAdapter = CharactersListForDetailsAdapter()
@@ -104,6 +112,12 @@ class EpisodeDetailsFragment : Fragment() {
         binding.episodeAirDateDetail.text = presentationDetails.air_date
         binding.episodeNameDetail.text = presentationDetails.name
         binding.episodeNumberDetail.text = "Series ${presentationDetails.episode}"
+    }
+
+    private fun showProgressBar() {
+        vm.isLoading.observe(viewLifecycleOwner) { it ->
+            binding.progressBarEpisodesDetails.isVisible = it
+        }
     }
 
     private fun init() {

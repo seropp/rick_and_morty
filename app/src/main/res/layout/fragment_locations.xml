@@ -8,19 +8,22 @@
     tools:context=".presentation.screens.locations.locations_fragment.LocationsFragment">
 
 
-    <androidx.appcompat.widget.SearchView
+    <EditText
         android:id="@+id/search_locations"
+        android:paddingLeft="10dp"
         android:layout_width="@dimen/zero"
         android:layout_height="@dimen/filter_btn_size"
         android:layout_marginStart="@dimen/distance_vertical"
         android:layout_marginTop="@dimen/distance_vertical"
         android:layout_marginEnd="@dimen/distance_vertical"
         android:background="@drawable/background_search"
-        app:iconifiedByDefault="false"
+        android:lines="1"
+        android:hint="Location search"
+        android:maxLines="1"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/btn_filter_locations"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:queryHint="@string/search_location" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/btn_filter_locations"
@@ -87,17 +90,18 @@
             tools:orientation="vertical" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    <!--    <ProgressBar-->
-    <!--        android:id="@+id/progressBar_locations"-->
-    <!--        style="?android:attr/progressBarStyleLarge"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:foregroundGravity="center"-->
-    <!--        android:indeterminateTint="@color/yellow"-->
-    <!--        android:visibility="gone"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="@+id/rv_locations" />-->
+
+    <ProgressBar
+        android:id="@+id/progress_bar_location"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:indeterminateTint="@color/yellow"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/swipe_refresh_locations"
+        app:layout_constraintEnd_toEndOf="@+id/swipe_refresh_locations"
+        app:layout_constraintStart_toStartOf="@+id/swipe_refresh_locations"
+        app:layout_constraintTop_toTopOf="@+id/swipe_refresh_locations" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

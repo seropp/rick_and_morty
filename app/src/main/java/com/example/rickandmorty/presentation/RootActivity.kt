@@ -75,18 +75,22 @@ class RootActivity : AppCompatActivity(), Navigator {
 
     @OptIn(ExperimentalCoroutinesApi::class, kotlinx.coroutines.FlowPreview::class)
     override fun onBackPressed() {
-        super.onBackPressed()
+
         val fragment1: CharactersFragment? =
             supportFragmentManager.findFragmentByTag("CHARACTERS_FRAGMENT") as CharactersFragment?
         val fragment2: CharactersFragment? =
             supportFragmentManager.findFragmentByTag("OPEN_CharactersFragmentWithArg") as CharactersFragment?
         val fragment3: CharactersFragment? =
             supportFragmentManager.findFragmentByTag("ADD FIRST FRAGMENT") as CharactersFragment?
+        val fragment4: CharactersFragment? =
+            supportFragmentManager.findFragmentByTag("OPEN_CHARACTERS_FRAGMENT") as CharactersFragment?
         if (fragment1 != null && fragment1.isVisible ||
             fragment2 != null && fragment2.isVisible ||
-            fragment3 != null && fragment3.isVisible ) {
+            fragment3 != null && fragment3.isVisible ||
+            fragment4 != null && fragment4.isVisible ) {
             finish()
         }
+        super.onBackPressed()
     }
 
     override fun openCharactersFragment() {
@@ -97,7 +101,7 @@ class RootActivity : AppCompatActivity(), Navigator {
                 "CHARACTERS_FRAGMENT"
             ).addToBackStack("OPEN_CHARACTERS_FRAGMENT")
             .commit()
-        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager.popBackStack("CHARACTERS_FRAGMENT", FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
     override fun openEpisodesFragment() {
@@ -230,4 +234,9 @@ class RootActivity : AppCompatActivity(), Navigator {
             ).addToBackStack("OPEN_LocationsDetailFragment")
             .commit()
     }
+
+    override fun backButton() {
+        onBackPressed()
+    }
+
 }

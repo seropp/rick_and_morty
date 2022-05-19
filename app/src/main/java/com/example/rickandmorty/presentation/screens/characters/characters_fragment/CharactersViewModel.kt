@@ -27,6 +27,8 @@ class CharactersViewModel(
     private var _charactersFlow = MutableSharedFlow<PagingData<CharacterPresentation>>()
     val charactersFlow = _charactersFlow
 
+
+
     fun getCharactersByParams(
         name: String?,
         status: String?,

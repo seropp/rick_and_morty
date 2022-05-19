@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
@@ -104,19 +105,10 @@ class LocationsFragment : Fragment() {
             navigator().openLocationsFilterFragment()
         }
 
-        binding.searchLocations.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                performSearchEvent(query = newText)
-                return false
-            }
-
-        })
+//        binding.searchLocations.
         observeVM()
     }
+
 
     private fun observeVM() {
 
@@ -158,7 +150,14 @@ class LocationsFragment : Fragment() {
     private fun collectUiState() {
 
         viewLifecycleOwner.lifecycleScope.launch {
-            vm.locationsFlow.collectLatest { locationsAdapter?.submitData(it) }
+            vm.locationsFlow.collectLatest { locationsAdapter.submitData(it) }
+        }
+
+        lifecycleScope.launch {
+            locationsAdapter.loadStateFlow.collectLatest { loadStates ->
+                binding.progressBarLocation.isVisible = loadStates.refresh is LoadState.Loading
+
+            }
         }
     }
 

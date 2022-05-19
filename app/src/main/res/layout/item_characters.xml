@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="center"
-            android:src="@drawable/ic_character" />
+            android:src="@drawable/ic_loading" />
 
         <LinearLayout
             android:id="@+id/linearLayout"

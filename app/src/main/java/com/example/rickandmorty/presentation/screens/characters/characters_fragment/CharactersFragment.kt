@@ -17,14 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentCharactersBinding
 import com.example.rickandmorty.di.App
 import com.example.rickandmorty.presentation.adapters.characters_adapter.CharactersAdapter
-import com.example.rickandmorty.presentation.adapters.characters_adapter_for_details.CharactersListForDetailsAdapter
 import com.example.rickandmorty.presentation.navigator
 import kotlinx.android.synthetic.main.fragment_characters.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -164,9 +161,19 @@ lateinit var charactersViewModelProvider: CharactersViewModelProvider
 
     private fun collectUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            vm.charactersFlow.collectLatest { charactersAdapter.submitData(it) }
+            vm.charactersFlow.collectLatest {
+                charactersAdapter.submitData(it)
+            }
+        }
+
+        lifecycleScope.launch {
+            charactersAdapter.loadStateFlow.collectLatest { loadStates ->
+                binding.progressBarCharacters.isVisible = loadStates.refresh is LoadState.Loading
+
+            }
         }
     }
+
 
     private fun init() {
         arguments?.let {

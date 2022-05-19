@@ -120,7 +120,6 @@ class CharacterFiltersFragment : BottomSheetDialogFragment() {
             .setPositiveButton("Confirm") { dialog, _ ->
                 dialog.dismiss()
                 val selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
-                Log.e("checkedItem", "$selectedPosition");
                 if(typesArr.isNotEmpty()){ species = typesArr[selectedPosition] }
 
             }
@@ -137,7 +136,6 @@ class CharacterFiltersFragment : BottomSheetDialogFragment() {
             .setPositiveButton("Confirm") { dialog, _ ->
                 dialog.dismiss()
                 val selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
-                Log.e("checkedItem", "$selectedPosition");
                 if(typesArr.isNotEmpty()){ type = typesArr[selectedPosition] }
 
             }

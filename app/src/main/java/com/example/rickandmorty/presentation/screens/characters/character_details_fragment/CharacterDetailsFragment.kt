@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.*
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import com.example.rickandmorty.di.App
 import com.example.rickandmorty.presentation.adapters.character_details_adapter.EpisodeListForDetailsAdapter
 import com.example.rickandmorty.presentation.models.character.CharacterPresentation
 import com.example.rickandmorty.presentation.navigator
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -78,6 +80,11 @@ class CharacterDetailsFragment : Fragment() {
         vm.getCharacter(characterId)
         initView()
         observeVm()
+        showProgressBar()
+
+        binding.backBtn.setOnClickListener {
+            navigator().backButton()
+        }
 
         binding.characterOrigin.setOnClickListener {
             if (originLocationId != null) {
@@ -111,7 +118,8 @@ class CharacterDetailsFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = episodeListForDetailsAdapter
         }
-        episodeListForDetailsAdapter!!.onEpisodeItem = {navigator().openEpisodesDetailFragment(it.id)}
+        episodeListForDetailsAdapter!!.onEpisodeItem =
+            { navigator().openEpisodesDetailFragment(it.id) }
     }
 
     private fun observeVm() {
@@ -153,6 +161,13 @@ class CharacterDetailsFragment : Fragment() {
             "Location: ${characterDetails.lastLocation.getValue("location_name")}"
         binding.characterOrigin.text =
             "Origin: ${characterDetails.originLocation.getValue("location_name")}"
+    }
+
+    private fun showProgressBar() {
+        vm.isLoading.observe(viewLifecycleOwner) { it ->
+            binding.progressBarCharacterDetails.isVisible = it
+        }
+
     }
 
     private fun init() {

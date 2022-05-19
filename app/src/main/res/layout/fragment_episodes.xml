@@ -86,17 +86,17 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-<!--    <ProgressBar-->
-<!--        android:id="@+id/progressBar_episodes"-->
-<!--        style="?android:attr/progressBarStyleLarge"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:foregroundGravity="center"-->
-<!--        android:indeterminateTint="@color/yellow"-->
-<!--        android:visibility="gone"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/rv_episodes" />-->
+    <ProgressBar
+        android:id="@+id/progress_bar_episodes"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:indeterminateTint="@color/yellow"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/swipe_refresh_episodes"
+        app:layout_constraintEnd_toEndOf="@+id/swipe_refresh_episodes"
+        app:layout_constraintStart_toStartOf="@+id/swipe_refresh_episodes"
+        app:layout_constraintTop_toTopOf="@+id/swipe_refresh_episodes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

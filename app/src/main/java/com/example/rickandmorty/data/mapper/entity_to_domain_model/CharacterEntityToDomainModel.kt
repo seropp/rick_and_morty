@@ -1,6 +1,5 @@
 package com.example.rickandmorty.data.mapper.entity_to_domain_model
 
-import android.util.Log
 import androidx.room.ColumnInfo
 import com.example.rickandmorty.data.mapper.Mapper
 import com.example.rickandmorty.data.models.characters.Characters

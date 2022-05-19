@@ -25,6 +25,7 @@
         <entry key="..\:/RickandMorty/app/src/main/res/drawable/ic_genderless_checked.xml" value="0.217" />
         <entry key="..\:/RickandMorty/app/src/main/res/drawable/ic_launcher_background.xml" value="0.217" />
         <entry key="..\:/RickandMorty/app/src/main/res/drawable/ic_loading.xml" value="0.129" />
+        <entry key="..\:/RickandMorty/app/src/main/res/drawable/ic_loading_white.xml" value="0.1315" />
         <entry key="..\:/RickandMorty/app/src/main/res/drawable/ic_logo_background.xml" value="0.1185" />
         <entry key="..\:/RickandMorty/app/src/main/res/drawable/ic_male.xml" value="0.1445" />
         <entry key="..\:/RickandMorty/app/src/main/res/drawable/ic_male_activ.xml" value="0.237" />
@@ -52,7 +53,7 @@
         <entry key="..\:/RickandMorty/app/src/main/res/layout/fragment_episodes.xml" value="0.1" />
         <entry key="..\:/RickandMorty/app/src/main/res/layout/fragment_episodes_filter.xml" value="0.25416666666666665" />
         <entry key="..\:/RickandMorty/app/src/main/res/layout/fragment_location_detail.xml" value="0.25416666666666665" />
-        <entry key="..\:/RickandMorty/app/src/main/res/layout/fragment_location_details.xml" value="0.264" />
+        <entry key="..\:/RickandMorty/app/src/main/res/layout/fragment_location_details.xml" value="0.4" />
         <entry key="..\:/RickandMorty/app/src/main/res/layout/fragment_locations.xml" value="0.264" />
         <entry key="..\:/RickandMorty/app/src/main/res/layout/fragment_locations_filter.xml" value="0.25416666666666665" />
         <entry key="..\:/RickandMorty/app/src/main/res/layout/fragment_loctions_filter.xml" value="0.23177083333333334" />

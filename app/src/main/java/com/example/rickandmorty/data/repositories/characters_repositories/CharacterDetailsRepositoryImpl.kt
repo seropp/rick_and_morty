@@ -29,9 +29,7 @@ class CharacterDetailsRepositoryImpl(
             }
 
         } catch (e: HttpException) {
-            Log.e("Log", "${e.code()}")
         } catch (e: IOException) {
-            Log.e("Log", "${e.message}")
         }
 
         return@withContext CharacterEntityToDomainModel().transform(

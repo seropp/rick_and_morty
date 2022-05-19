@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.observe
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -70,6 +72,11 @@ class LocationDetailsFragment : Fragment() {
         vm.getLocation(locationId)
         initView()
         observeVm()
+        showProgressBar()
+
+        binding.backBtn.setOnClickListener{
+            navigator().backButton()
+        }
     }
 
     private fun initView() {
@@ -105,6 +112,12 @@ class LocationDetailsFragment : Fragment() {
         binding.locationDimensionsLocation.text = "Dimension: ${locationDetails.dimension}"
     }
 
+    private fun showProgressBar() {
+        vm.isLoading.observe(viewLifecycleOwner) { it ->
+            binding.progressBarLocationDetails.isVisible = it
+        }
+
+    }
     private fun init() {
         arguments?.let {
             locationId = it.getInt(KEY_LOCATION_ID)
